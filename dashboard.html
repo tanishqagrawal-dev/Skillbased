@@ -3,46 +3,68 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>Dashboard | SkillHire</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
 
-<nav>
-  <h2>Dashboard</h2>
-  <button onclick="logout()">Logout</button>
+<nav class="sidebar">
+  <h2>SkillHire</h2>
+  <ul>
+    <li class="active">Dashboard</li>
+    <li>Resume Analyzer</li>
+    <li>ATS Checker</li>
+    <li>Skill Gaps</li>
+    <li>Courses</li>
+    <li onclick="logout()">Logout</li>
+  </ul>
 </nav>
 
-<section class="dashboard">
+<main>
+  <header class="topbar">
+    <h1>Career Readiness Dashboard</h1>
+    <p>Track your resume strength and skill progress</p>
+  </header>
 
-  <div class="box">
-    <h3>Upload Resume</h3>
-    <input type="file" id="resume">
-    <button onclick="analyzeResume()" class="btn">Analyze</button>
-  </div>
+  <!-- METRICS -->
+  <section class="metrics">
+    <div class="metric-card">
+      <h3>Resume Score</h3>
+      <span id="resumeScore">--</span>
+    </div>
+    <div class="metric-card">
+      <h3>ATS Match</h3>
+      <span id="atsScore">--</span>
+    </div>
+    <div class="metric-card">
+      <h3>Job Readiness</h3>
+      <span id="jobScore">--</span>
+    </div>
+  </section>
 
-  <div class="box">
-    <h3>Resume Score</h3>
-    <p id="resumeScore">--</p>
-  </div>
+  <!-- UPLOAD -->
+  <section class="upload">
+    <h2>Upload Resume</h2>
+    <input type="file" id="resumeFile">
+    <button onclick="analyzeResume()">Analyze Resume</button>
+  </section>
 
-  <div class="box">
-    <h3>ATS Match</h3>
-    <p id="atsScore">--</p>
-  </div>
+  <!-- SKILLS -->
+  <section class="content">
+    <div class="box">
+      <h3>Missing Skills</h3>
+      <ul id="skills"></ul>
+    </div>
 
-  <div class="box">
-    <h3>Skill Gap</h3>
-    <ul id="skills"></ul>
-  </div>
+    <div class="box">
+      <h3>Recommended Courses</h3>
+      <ul id="courses"></ul>
+    </div>
+  </section>
 
-  <div class="box">
-    <h3>Recommended Courses</h3>
-    <ul id="courses"></ul>
-  </div>
+</main>
 
-</section>
-
-<script src="js/resume.js"></script>
+<script src="js/dashboard.js"></script>
 </body>
 </html>
