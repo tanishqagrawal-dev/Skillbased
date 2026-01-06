@@ -1,5 +1,5 @@
 
-function googleLogin() {
-  alert("Google login successful (mock)");
+function login() {
+  // mock auth
   window.location.href = "dashboard.html";
 }
