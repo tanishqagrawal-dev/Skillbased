@@ -1,15 +1,6 @@
 
-AOS.init({ duration: 1000 });
-
-VanillaTilt.init(document.querySelectorAll(".tilt"), {
-  max: 15,
-  speed: 400,
-  glare: true,
-  "max-glare": 0.2
-});
-
 /* DONUT */
-new Chart(document.getElementById("readinessChart"), {
+new Chart(document.getElementById("donut"), {
   type: "doughnut",
   data: {
     datasets: [{
@@ -25,7 +16,7 @@ new Chart(document.getElementById("readinessChart"), {
 });
 
 /* RADAR */
-new Chart(document.getElementById("skillRadar"), {
+new Chart(document.getElementById("radar"), {
   type: "radar",
   data: {
     labels: ["DSA", "React", "Backend", "System Design", "Git"],
@@ -34,27 +25,8 @@ new Chart(document.getElementById("skillRadar"), {
       backgroundColor: "rgba(37,99,235,0.4)",
       borderColor: "#2563eb"
     }]
-  },
-  options: {
-    scales: { r: { ticks: { display: false } } }
   }
 });
-
-/* MOCK ANALYSIS */
-function analyzeResume() {
-  const skills = ["System Design", "Backend APIs", "Cloud Basics"];
-  const courses = [
-    "System Design Basics – YouTube",
-    "Backend Development – Coursera",
-    "Cloud Fundamentals – Google"
-  ];
-
-  document.getElementById("skills").innerHTML =
-    skills.map(s => `<li>${s}</li>`).join("");
-
-  document.getElementById("courses").innerHTML =
-    courses.map(c => `<li>${c}</li>`).join("");
-}
 
 function logout() {
   window.location.href = "index.html";
