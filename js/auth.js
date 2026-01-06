@@ -1,9 +1,5 @@
 
 function googleLogin() {
-  alert("Google Login Successful (Mock)");
+  alert("Google login successful (mock)");
   window.location.href = "dashboard.html";
-}
-
-function logout() {
-  window.location.href = "index.html";
 }
