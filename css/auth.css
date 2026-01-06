@@ -1,0 +1,50 @@
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #2563eb, #1e3a8a);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-card {
+  background: white;
+  padding: 40px;
+  width: 360px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+}
+
+.auth-card h1 {
+  margin-bottom: 10px;
+}
+
+.auth-card p {
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8fafc;
+  border: 1px solid #ddd;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.google-btn img {
+  width: 20px;
+}
+
+.note {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #777;
+}
