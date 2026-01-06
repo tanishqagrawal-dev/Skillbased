@@ -2,15 +2,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <title>Login | SkillHire</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/auth.css">
 </head>
-<body class="center">
+<body>
 
-<div class="login-card">
-  <h2>Login</h2>
-  <button onclick="googleLogin()" class="btn google">Continue with Google</button>
+<div class="auth-container">
+  <div class="auth-card">
+    <h1>Welcome to SkillHire</h1>
+    <p>Sign in to analyze your resume and track your career readiness</p>
+
+    <button class="google-btn" onclick="googleLogin()">
+      <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png">
+      Continue with Google
+    </button>
+
+    <p class="note">Secure login • No spam • Hackathon Demo</p>
+  </div>
 </div>
 
 <script src="js/auth.js"></script>
