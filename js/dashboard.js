@@ -1,33 +1,59 @@
 
-function analyzeResume() {
-  document.getElementById("resumeScore").innerText = "78 / 100";
-  document.getElementById("atsScore").innerText = "82%";
-  document.getElementById("jobScore").innerText = "74%";
+AOS.init({ duration: 1000 });
 
-  const skills = ["React Hooks", "System Design Basics", "REST APIs"];
+VanillaTilt.init(document.querySelectorAll(".tilt"), {
+  max: 15,
+  speed: 400,
+  glare: true,
+  "max-glare": 0.2
+});
+
+/* DONUT */
+new Chart(document.getElementById("readinessChart"), {
+  type: "doughnut",
+  data: {
+    datasets: [{
+      data: [74, 26],
+      backgroundColor: ["#22c55e", "#334155"],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    cutout: "80%",
+    plugins: { legend: { display: false } }
+  }
+});
+
+/* RADAR */
+new Chart(document.getElementById("skillRadar"), {
+  type: "radar",
+  data: {
+    labels: ["DSA", "React", "Backend", "System Design", "Git"],
+    datasets: [{
+      data: [65, 80, 40, 35, 70],
+      backgroundColor: "rgba(37,99,235,0.4)",
+      borderColor: "#2563eb"
+    }]
+  },
+  options: {
+    scales: { r: { ticks: { display: false } } }
+  }
+});
+
+/* MOCK ANALYSIS */
+function analyzeResume() {
+  const skills = ["System Design", "Backend APIs", "Cloud Basics"];
   const courses = [
-    "React Advanced – Coursera",
-    "System Design for Beginners – YouTube",
-    "API Development – Udemy"
+    "System Design Basics – YouTube",
+    "Backend Development – Coursera",
+    "Cloud Fundamentals – Google"
   ];
 
-  const skillList = document.getElementById("skills");
-  const courseList = document.getElementById("courses");
+  document.getElementById("skills").innerHTML =
+    skills.map(s => `<li>${s}</li>`).join("");
 
-  skillList.innerHTML = "";
-  courseList.innerHTML = "";
-
-  skills.forEach(skill => {
-    const li = document.createElement("li");
-    li.textContent = skill;
-    skillList.appendChild(li);
-  });
-
-  courses.forEach(course => {
-    const li = document.createElement("li");
-    li.textContent = course;
-    courseList.appendChild(li);
-  });
+  document.getElementById("courses").innerHTML =
+    courses.map(c => `<li>${c}</li>`).join("");
 }
 
 function logout() {
