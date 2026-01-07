@@ -1,23 +1,56 @@
+import os
+import json
+import PyPDF2
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import PyPDF2, google.generativeai as genai
+import google.generativeai as genai
 
 app = Flask(__name__)
 CORS(app)
 
+# YOUR PROVIDED API KEY
 genai.configure(api_key="AIzaSyB-NmKF4ouTaHg-KrndRUwb1Qh6ioqYQD8")
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
-    file = request.files['resume']
-    pdf = PyPDF2.PdfReader(file)
-    text = "".join([page.extract_text() for page in pdf.pages])
+    try:
+        # Get data from request
+        file = request.files['resume']
+        jd_text = request.form.get('jd', 'Software Engineer Role')
+        
+        # 1. Extract Text from PDF
+        pdf_reader = PyPDF2.PdfReader(file)
+        resume_text = ""
+        for page in pdf_reader.pages:
+            resume_text += page.extract_text()
 
-    model = genai.GenerativeModel('gemini-pro')
-    prompt = f"Analyze this resume: {text}. Output JSON with: 'score' (0-100), 'gaps' (list of missing technical skills), 'courses' (list of 3 recommended topics)."
-    
-    response = model.generate_content(prompt)
-    return response.text
+        # 2. AI Prompting (Gemini Pro)
+        model = genai.GenerativeModel('gemini-pro')
+        prompt = f"""
+        Act as an expert ATS (Applicant Tracking System) and Recruiter.
+        Target Job Description: {jd_text}
+        Candidate Resume: {resume_text}
+        
+        Provide a detailed analysis in JSON format ONLY:
+        {{
+          "score": (integer 0-100),
+          "gaps": ["Missing Skill 1", "Missing Skill 2"],
+          "salary_est": "e.g. 15L - 20L",
+          "courses": [
+            {{"title": "Course Name", "provider": "Coursera/Udemy/YouTube", "time": "Duration"}},
+            {{"title": "Course Name", "provider": "Coursera/Udemy/YouTube", "time": "Duration"}}
+          ],
+          "market_insight": "One line about demand for this role"
+        }}
+        """
+        
+        response = model.generate_content(prompt)
+        # Clean the response to ensure it's valid JSON
+        clean_json = response.text.replace('```json', '').replace('```', '').strip()
+        return jsonify(json.loads(clean_json))
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    app.run(port=5000, debug=True)
