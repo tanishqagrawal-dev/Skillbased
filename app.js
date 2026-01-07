@@ -1,78 +1,55 @@
-// Firebase Config
-const firebaseConfig = { apiKey: "YOUR_KEY", authDomain: "your-project.firebaseapp.com", projectId: "your-project" };
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
+let radarChart, barChart;
 
-// UI Elements
-const dropZone = document.getElementById('drop-zone');
-const fileInput = document.getElementById('file-input');
-const scanLine = document.getElementById('scan-line');
-const dashboard = document.getElementById('dashboard');
+async function startAnalysis() {
+    const file = document.getElementById('resumeUpload').files[0];
+    const jd = document.getElementById('jdText').value;
+    if(!file) return alert("Upload Resume!");
 
-// Google Auth
-document.getElementById('google-login').onclick = async () => {
-    const result = await auth.signInWithPopup(provider);
-    document.getElementById('google-login').classList.add('hidden');
-    document.getElementById('user-profile').classList.remove('hidden');
-    document.getElementById('user-name').innerText = result.user.displayName;
-    document.getElementById('user-img').src = result.user.photoURL;
-};
+    const formData = new FormData();
+    formData.append('resume', file);
+    formData.append('jd', jd);
 
-// Analyzer Trigger
-dropZone.onclick = () => fileInput.click();
-fileInput.onchange = (e) => startAnalysis(e.target.files[0]);
-document.getElementById('analyze-btn').onclick = () => startAnalysis(fileInput.files[0]);
+    const response = await fetch('http://localhost:5000/analyze', { method: 'POST', body: formData });
+    const data = await response.json();
 
-async function startAnalysis(file) {
-    if (!file) { alert("Please upload a resume first!"); return; }
-    
-    // Animation Start
-    scanLine.style.display = 'block';
-    
-    // Simulate AI Processing (Replace with fetch('YOUR_BACKEND_URL/analyze'))
-    setTimeout(() => {
-        scanLine.style.display = 'none';
-        dashboard.classList.remove('hidden');
-        renderResults({
-            score: 85,
-            gaps: ["Kubernetes", "Redis", "System Design", "Unit Testing"],
-            salary: "14.5L - 18L",
-            courses: [
-                { title: "K8s Masterclass", provider: "Udemy", time: "2 Weeks" },
-                { title: "System Design for Scale", provider: "Coursera", time: "1 Month" },
-                { title: "Redis Deep Dive", provider: "YouTube", time: "1 Week" }
-            ]
-        });
-        window.scrollTo({ top: dashboard.offsetTop - 100, behavior: 'smooth' });
-    }, 3000);
+    document.getElementById('results').classList.remove('hidden');
+    document.getElementById('finalScore').innerText = data.score + "%";
+
+    // Radar Chart - Skill Analysis
+    const ctxRadar = document.getElementById('radarChart').getContext('2d');
+    if(radarChart) radarChart.destroy();
+    radarChart = new Chart(ctxRadar, {
+        type: 'radar',
+        data: {
+            labels: ['Technical', 'Soft Skills', 'Experience', 'Education'],
+            datasets: [{
+                label: 'Your Profile',
+                data: [data.skill_metrics.technical, data.skill_metrics.soft, data.skill_metrics.experience, data.skill_metrics.education],
+                backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                borderColor: '#3b82f6'
+            }]
+        },
+        options: { scales: { r: { grid: { color: '#334155' }, ticks: { display: false } } } }
+    });
+
+    // Bar Chart - Company Ratios
+    const ctxBar = document.getElementById('barChart').getContext('2d');
+    if(barChart) barChart.destroy();
+    barChart = new Chart(ctxBar, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(data.company_ratio),
+            datasets: [{
+                label: 'Fit Ratio (%)',
+                data: Object.values(data.company_ratio),
+                backgroundColor: '#3b82f6'
+            }]
+        }
+    });
 }
 
-function renderResults(data) {
-    // ATS Score Animation
-    const circle = document.getElementById('score-circle');
-    const scoreVal = document.getElementById('score-val');
-    circle.style.strokeDashoffset = 364 - (364 * data.score) / 100;
-    scoreVal.innerText = data.score + "%";
-
-    // Salary
-    document.getElementById('salary-est').innerText = "₹" + data.salary;
-
-    // Gaps
-    document.getElementById('gap-container').innerHTML = data.gaps.map(gap => `
-        <span class="px-4 py-2 bg-red-500/10 border border-red-500/30 text-red-400 rounded-full text-xs font-bold animate-pulse">${gap}</span>
-    `).join('');
-
-    // Courses
-    document.getElementById('course-list').innerHTML = data.courses.map(c => `
-        <div class="glass-panel p-6 hover:border-blue-500 transition group cursor-pointer">
-            <div class="flex justify-between items-start mb-4">
-                <span class="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-1 rounded-md uppercase font-bold">${c.time}</span>
-                <i data-lucide="external-link" class="w-4 h-4 text-gray-600 group-hover:text-blue-500"></i>
-            </div>
-            <h5 class="font-bold text-lg mb-1">${c.title}</h5>
-            <p class="text-xs text-gray-500">${c.provider}</p>
-        </div>
-    `).join('');
-    lucide.createIcons();
-}
+// Simple Visit Counter Simulation
+setInterval(() => {
+    const el = document.getElementById('visit-count');
+    el.innerText = (parseInt(el.innerText.replace(',','')) + Math.floor(Math.random()*3)).toLocaleString();
+}, 5000);
