@@ -3,98 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkillHire AI | Professional Career Suite</title>
+    <title>SkillGap AI | Precision Career Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.16.4/framer-motion.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #020617; color: white; overflow-x: hidden; }
-        .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .neo-glow { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
-        
-        /* The Scanning Animation */
-        .scanner-line {
-            width: 100%; height: 4px; background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-            position: absolute; top: 0; animation: scan 2s linear infinite; display: none;
-        }
-        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
-
-        /* Floating Graphics */
-        .float-anim { animation: float 5s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        body { font-family: 'Space Grotesk', sans-serif; background: #030712; color: #f8fafc; overflow-x: hidden; }
+        .glass-panel { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 24px; }
+        .neon-border { border: 1px solid transparent; background: linear-gradient(#030712, #030712) padding-box, linear-gradient(90deg, #3b82f6, #8b5cf6) border-box; }
+        .scan-effect { position: absolute; width: 100%; height: 5px; background: #3b82f6; box-shadow: 0 0 20px #3b82f6; animation: scan 2.5s ease-in-out infinite; display: none; }
+        @keyframes scan { 0% { top: 0%; opacity: 0; } 50% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        .bento-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .bento-card:hover { transform: scale(1.02); background: rgba(30, 41, 59, 0.8); border-color: #3b82f6; }
     </style>
 </head>
 <body>
-
-    <nav class="fixed top-0 w-full z-50 glass border-b border-white/5 px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-2">
-            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-xl shadow-lg shadow-blue-500/50">S</div>
-            <span class="text-xl font-extrabold tracking-tighter">SKILLBRIDGE <span class="text-blue-500">AI</span></span>
+    <nav class="fixed top-0 w-full z-50 glass-panel !rounded-none border-b border-white/5 px-8 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
+                <i data-lucide="zap" class="text-white fill-white"></i>
+            </div>
+            <span class="text-2xl font-bold tracking-tighter">SKILLGAP <span class="text-blue-500">AI</span></span>
         </div>
-        <div id="auth-section">
-            <button id="login-btn" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-full text-sm font-bold flex items-center gap-2 transition-all">
-                <i data-lucide="log-in" class="w-4 h-4"></i> Login with Google
+        <div id="auth-box" class="flex items-center gap-4">
+            <button id="google-login" class="flex items-center gap-2 bg-white text-black px-5 py-2 rounded-full font-bold text-sm hover:bg-gray-200 transition">
+                <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" class="w-4 h-4"> Login with Google
             </button>
-            <div id="user-info" class="hidden flex items-center gap-3">
-                <span id="user-name" class="text-sm font-medium"></span>
-                <img id="user-pic" src="" class="w-10 h-10 rounded-full border-2 border-blue-500">
+            <div id="user-profile" class="hidden flex items-center gap-3">
+                <div class="text-right">
+                    <p id="user-name" class="text-xs font-bold text-blue-400"></p>
+                    <p class="text-[10px] text-gray-500">Candidate Level: Pro</p>
+                </div>
+                <img id="user-img" src="" class="w-10 h-10 rounded-full border-2 border-blue-500">
             </div>
         </div>
     </nav>
 
-    <main class="pt-32 px-6 max-w-7xl mx-auto pb-20">
-        <section class="text-center mb-20">
-            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">Apply with <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Data,</span> not Luck.</h1>
-            <p class="text-slate-400 text-lg max-w-2xl mx-auto">AI-powered resume analysis, automated course recommendations, and real-time market insights.</p>
-        </section>
+    <main class="pt-32 px-6 max-w-7xl mx-auto pb-24">
+        <div class="text-center mb-16">
+            <h1 class="text-6xl md:text-8xl font-bold mb-6 tracking-tight">Apply <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-500">Smarter.</span></h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">Verify your skills via GitHub, simulate recruiter eye-tracking, and crush ATS filters.</p>
+        </div>
 
-        <div id="upload-container" class="max-w-3xl mx-auto mb-16 relative">
-            <div id="drop-zone" class="glass rounded-[32px] p-16 border-2 border-dashed border-blue-500/30 flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 transition-all group overflow-hidden">
-                <div id="scanner" class="scanner-line"></div>
-                <div class="p-6 bg-blue-600/10 rounded-2xl mb-4 group-hover:scale-110 transition">
-                    <i data-lucide="file-text" class="w-12 h-12 text-blue-500"></i>
-                </div>
-                <h3 class="text-2xl font-bold">Upload Resume</h3>
-                <p class="text-slate-500 mt-2">PDF only for deep structural analysis</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            <div id="drop-zone" class="glass-panel p-12 border-2 border-dashed border-blue-500/30 flex flex-col items-center justify-center cursor-pointer group relative overflow-hidden">
+                <div id="scan-line" class="scan-effect"></div>
+                <i data-lucide="file-up" class="w-16 h-16 text-blue-500 mb-6 group-hover:scale-110 transition"></i>
+                <h3 class="text-2xl font-bold">Drop Resume (PDF)</h3>
+                <p class="text-gray-500 mt-2">AI-based semantic extraction</p>
                 <input type="file" id="file-input" class="hidden" accept=".pdf">
+            </div>
+            
+            <div class="glass-panel p-8 flex flex-col justify-center">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="target" class="text-purple-500"></i> Target Job Description
+                </h3>
+                <textarea id="jd-input" class="w-full h-40 bg-black/40 border border-white/10 rounded-xl p-4 text-sm focus:border-blue-500 outline-none transition" placeholder="Paste the Job Description here to calculate semantic match..."></textarea>
+                <button id="analyze-btn" class="mt-4 w-full bg-blue-600 hover:bg-blue-500 py-3 rounded-xl font-bold transition">Start Deep Analysis</button>
             </div>
         </div>
 
-        <div id="dashboard" class="hidden space-y-8 animate-in fade-in duration-700">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass p-8 rounded-3xl text-center">
-                    <h4 class="text-slate-400 uppercase text-xs font-bold tracking-widest mb-6">ATS Compatibility</h4>
-                    <div class="inline-flex items-center justify-center w-32 h-32 rounded-full border-8 border-blue-500/20 relative">
-                        <span id="ats-score" class="text-4xl font-black">0%</span>
+        <div id="dashboard" class="hidden space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="bento-card glass-panel p-8 text-center">
+                    <h4 class="text-gray-500 text-xs font-bold uppercase mb-6">ATS Readiness</h4>
+                    <div class="relative inline-flex items-center justify-center">
+                        <svg class="w-32 h-32 transform -rotate-90">
+                            <circle cx="64" cy="64" r="58" stroke="currentColor" stroke-width="8" fill="transparent" class="text-gray-800"/>
+                            <circle id="score-circle" cx="64" cy="64" r="58" stroke="currentColor" stroke-width="8" fill="transparent" stroke-dasharray="364" stroke-dashoffset="364" class="text-blue-500 transition-all duration-1000"/>
+                        </svg>
+                        <span id="score-val" class="absolute text-3xl font-bold">0%</span>
                     </div>
                 </div>
 
-                <div class="glass p-8 rounded-3xl md:col-span-2">
-                    <h4 class="text-slate-400 uppercase text-xs font-bold tracking-widest mb-6">Critical Skill Gaps</h4>
-                    <div id="gap-tags" class="flex flex-wrap gap-3">
+                <div class="bento-card glass-panel p-8 md:col-span-2">
+                    <h4 class="text-gray-500 text-xs font-bold uppercase mb-6">Identified Skill Gaps</h4>
+                    <div id="gap-container" class="flex flex-wrap gap-2">
                         </div>
+                </div>
+
+                <div class="bento-card glass-panel p-8">
+                    <h4 class="text-gray-500 text-xs font-bold uppercase mb-6">Estimated Salary</h4>
+                    <p class="text-4xl font-bold text-green-400" id="salary-est">₹0</p>
+                    <p class="text-[10px] text-gray-500 mt-2">Based on current skill match & market trends</p>
                 </div>
             </div>
 
-            <div class="glass p-8 rounded-3xl">
-                <h4 class="text-slate-400 uppercase text-xs font-bold tracking-widest mb-6">Smart Learning Path</h4>
-                <div id="course-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-panel p-8">
+                <h4 class="text-gray-500 text-xs font-bold uppercase mb-8">Personalized Learning Roadmap</h4>
+                <div id="course-list" class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     </div>
             </div>
         </div>
     </main>
 
-    <div class="md:hidden fixed bottom-0 w-full glass border-t border-white/10 px-10 py-4 flex justify-between items-center z-50">
-        <i data-lucide="home" class="text-blue-500"></i>
-        <i data-lucide="bar-chart-2" class="text-slate-400"></i>
-        <i data-lucide="book" class="text-slate-400"></i>
-    </div>
-
-    <script src="script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="app.js"></script>
     <script>lucide.createIcons();</script>
 </body>
 </html>
