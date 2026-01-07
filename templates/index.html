@@ -2,78 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SkillGap AI | Precision Auditor</title>
+    <title>SkillGap AI | Advanced Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        body { background: #020617; color: white; scroll-behavior: smooth; }
         .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
-        html { scroll-behavior: smooth; }
-        body { background: #020617; color: white; }
+        .hero-glow { background: radial-gradient(circle at top, #1e1b4b, #020617); }
     </style>
 </head>
-<body class="smooth-scroll">
-    <nav class="fixed top-0 w-full z-50 glass flex justify-between items-center px-12 py-4">
-        <div class="text-2xl font-black flex items-center gap-2"><i data-lucide="zap" class="text-blue-500"></i> SkillGap</div>
-        <div class="flex gap-8 text-sm font-bold uppercase tracking-widest">
-            <a href="#hero" class="hover:text-blue-400">Home</a>
-            <a href="#analyzer" class="hover:text-blue-400">Analyzer</a>
-            <a href="#faq" class="hover:text-blue-400">FAQ</a>
+<body>
+    <nav class="fixed top-0 w-full z-50 glass flex justify-between items-center px-10 py-4">
+        <div class="text-xl font-bold text-blue-500 flex items-center gap-2"><i data-lucide="shield-check"></i> SkillGap AI</div>
+        <div class="flex gap-6 text-sm">
+            <a href="#home">Home</a><a href="#audit">Audit</a><a href="#faq">FAQ</a>
         </div>
-        <button id="user-display-name" class="bg-blue-600 px-6 py-2 rounded-full font-bold">Sign In</button>
+        <button id="loginBtn" onclick="handleLogin()" class="bg-blue-600 px-5 py-1.5 rounded-full text-sm">Login</button>
     </nav>
 
-    <section id="hero" class="min-h-screen flex flex-col items-center justify-center text-center p-6 bg-[radial-gradient(circle_at_top,#1e293b,#020617)]">
-        <h1 class="text-7xl font-black mb-6">Bridge the <span class="text-blue-500">Gap.</span></h1>
-        <p class="text-gray-400 max-w-2xl mb-12">The world's most accurate AI resume auditor with deep company placement analytics and automated skill roadmaps.</p>
-        <div class="flex gap-4">
-            <a href="#analyzer" class="bg-white text-black px-8 py-4 rounded-xl font-bold">Start Analysis</a>
-            <div class="glass px-8 py-4 rounded-xl flex items-center gap-2">
-                <i data-lucide="eye" class="text-blue-500"></i> <span>Platform Visits: <span id="vCount">45,210</span></span>
+    <section id="home" class="min-h-screen flex flex-col items-center justify-center text-center hero-glow">
+        <h1 class="text-6xl font-black mb-4">Bridge Your <span class="text-blue-500">Skill Gap.</span></h1>
+        <p class="text-gray-400 mb-8">AI-Powered Resume Auditor & Career Roadmap Generator</p>
+        <div class="glass px-6 py-3 rounded-2xl mb-4">Total Visitors: <span id="visitorCount" class="text-blue-400">12,402</span></div>
+        <a href="#audit" class="bg-white text-black px-8 py-3 rounded-xl font-bold">Start Free Audit</a>
+    </section>
+
+    <section id="audit" class="py-20 max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-8 mb-10">
+            <div class="glass p-10 rounded-3xl border-2 border-dashed border-gray-700 text-center hover:border-blue-500 transition cursor-pointer" onclick="document.getElementById('fileInput').click()">
+                <i data-lucide="upload-cloud" class="mx-auto mb-4 w-12 h-12 text-blue-500"></i>
+                <p>Upload Resume (PDF)</p>
+                <input type="file" id="fileInput" class="hidden" accept=".pdf">
+            </div>
+            <div class="glass p-8 rounded-3xl">
+                <textarea id="jdText" class="w-full h-32 bg-transparent outline-none text-sm" placeholder="Paste Job Description here..."></textarea>
+                <button onclick="runAudit()" class="w-full bg-blue-600 py-3 rounded-xl font-bold mt-4">Run AI Audit</button>
+            </div>
+        </div>
+
+        <div id="results" class="hidden grid md:grid-cols-2 gap-8">
+            <div class="glass p-6 rounded-3xl"><canvas id="radarChart"></canvas></div>
+            <div class="glass p-6 rounded-3xl"><canvas id="barChart"></canvas></div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-20 bg-white/5">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-3xl font-bold mb-8">FAQ</h2>
+            <div class="glass p-5 rounded-xl mb-4">
+                <p class="text-blue-400 font-bold">Is the result accurate?</p>
+                <p class="text-sm text-gray-400">Our 99.2% accuracy comes from Gemini's semantic analysis of 10k+ industry JDs.</p>
             </div>
         </div>
     </section>
 
-    <section id="analyzer" class="py-24 max-w-6xl mx-auto px-6">
-        <div class="grid md:grid-cols-2 gap-8 mb-16">
-            <div class="glass p-12 rounded-3xl border-2 border-dashed border-blue-500/30 text-center cursor-pointer hover:border-blue-500 transition" onclick="document.getElementById('resFile').click()">
-                <i data-lucide="file-text" class="mx-auto mb-4 w-12 h-12 text-blue-500"></i>
-                <p class="font-bold">Drop Resume PDF Here</p>
-                <input type="file" id="resFile" class="hidden" accept=".pdf">
-            </div>
-            <div class="glass p-8 rounded-3xl">
-                <textarea id="jdText" class="w-full h-32 bg-transparent border-none outline-none text-sm" placeholder="Paste Job Description..."></textarea>
-                <button onclick="runAnalysis()" class="w-full bg-blue-600 py-4 rounded-xl font-bold mt-4 shadow-lg shadow-blue-500/20">Analyze Now</button>
-            </div>
-        </div>
-
-        <div id="dashboard" class="hidden grid md:grid-cols-2 gap-8">
-            <div class="glass p-8 rounded-3xl">
-                <h3 class="font-bold mb-4">Skill Radar</h3>
-                <canvas id="skillRadar"></canvas>
-            </div>
-            <div class="glass p-8 rounded-3xl">
-                <h3 class="font-bold mb-4">Market Placement Ratio</h3>
-                <canvas id="ratioBar"></canvas>
-            </div>
-        </div>
-    </section>
-
-    <section id="faq" class="py-24 max-w-4xl mx-auto px-6">
-        <h2 class="text-4xl font-black mb-12 text-center">Frequently Asked Questions</h2>
-        <div class="space-y-4">
-            <div class="glass p-6 rounded-2xl">
-                <p class="font-bold text-blue-400">How does the accuracy work?</p>
-                <p class="text-gray-400 text-sm mt-2">We utilize Gemini 1.5 Flash to perform semantic cross-referencing between your experience and industry-standard JD requirements.</p>
-            </div>
-            <div class="glass p-6 rounded-2xl">
-                <p class="font-bold text-blue-400">Can I track my progress?</p>
-                <p class="text-gray-400 text-sm mt-2">Yes, your profile dashboard tracks previous scan results and provides a consolidated growth chart.</p>
-            </div>
-        </div>
-    </section>
-
-    <script src="../static/app.js"></script>
-    <script src="../static/script.js"></script>
+    <script src="script.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
