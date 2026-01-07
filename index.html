@@ -3,79 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkillHire Premium | AI Career Engine</title>
+    <title>SkillHire AI | Professional Career Suite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.16.4/framer-motion.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
     <style>
-        :root { --primary: #3b82f6; --bg: #030712; }
-        body { background-color: var(--bg); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .neo-gradient { background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); }
-        .scan-line { position: absolute; width: 100%; height: 4px; background: var(--primary); box-shadow: 0 0 20px var(--primary); animation: scan 3s linear infinite; display: none; }
-        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
-        .bento-card { transition: all 0.3s ease; }
-        .bento-card:hover { transform: scale(1.02); border-color: var(--primary); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #020617; color: white; overflow-x: hidden; }
+        .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .neo-glow { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+        
+        /* The Scanning Animation */
+        .scanner-line {
+            width: 100%; height: 4px; background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+            position: absolute; top: 0; animation: scan 2s linear infinite; display: none;
+        }
+        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
+
+        /* Floating Graphics */
+        .float-anim { animation: float 5s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
     </style>
 </head>
 <body>
-    <nav class="fixed top-0 w-full z-50 glass border-b border-white/10 px-6 py-4 flex justify-between items-center">
+
+    <nav class="fixed top-0 w-full z-50 glass border-b border-white/5 px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-2">
-            <div class="w-8 h-8 neo-gradient rounded-lg flex items-center justify-center font-bold">S</div>
-            <span class="text-xl font-bold tracking-tight">SKILLHIRE <span class="text-blue-500">PRO</span></span>
+            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-xl shadow-lg shadow-blue-500/50">S</div>
+            <span class="text-xl font-extrabold tracking-tighter">SKILLBRIDGE <span class="text-blue-500">AI</span></span>
         </div>
-        <div id="user-profile" class="hidden flex items-center gap-3">
-            <img id="user-img" src="" class="w-8 h-8 rounded-full border border-blue-500">
-            <span id="user-name" class="text-sm font-medium"></span>
+        <div id="auth-section">
+            <button id="login-btn" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-full text-sm font-bold flex items-center gap-2 transition-all">
+                <i data-lucide="log-in" class="w-4 h-4"></i> Login with Google
+            </button>
+            <div id="user-info" class="hidden flex items-center gap-3">
+                <span id="user-name" class="text-sm font-medium"></span>
+                <img id="user-pic" src="" class="w-10 h-10 rounded-full border-2 border-blue-500">
+            </div>
         </div>
-        <button id="login-btn" class="glass px-5 py-2 rounded-full text-sm font-semibold flex items-center gap-2 hover:bg-white/10 transition">
-            <i data-lucide="log-in" class="w-4 h-4"></i> Login with Google
-        </button>
     </nav>
 
-    <main class="pt-32 pb-20 px-6 max-w-6xl mx-auto">
-        <div class="text-center mb-16">
-            <h1 class="text-6xl font-black mb-6 leading-tight">Crush Your <span class="text-transparent bg-clip-text neo-gradient">Career Gaps.</span></h1>
-            <p class="text-gray-400 text-lg max-w-2xl mx-auto">Upload your resume. Let our AI simulate the recruiter's mind and tell you exactly why you aren't getting hired—and how to fix it.</p>
-        </div>
+    <main class="pt-32 px-6 max-w-7xl mx-auto pb-20">
+        <section class="text-center mb-20">
+            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">Apply with <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Data,</span> not Luck.</h1>
+            <p class="text-slate-400 text-lg max-w-2xl mx-auto">AI-powered resume analysis, automated course recommendations, and real-time market insights.</p>
+        </section>
 
-        <div class="max-w-3xl mx-auto mb-20 relative">
-            <div id="drop-zone" class="glass rounded-3xl p-16 border-2 border-dashed border-white/20 flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 transition-all group relative overflow-hidden">
-                <div id="scanner" class="scan-line"></div>
-                <div class="p-5 bg-blue-500/10 rounded-2xl mb-4 group-hover:scale-110 transition">
-                    <i data-lucide="upload" class="w-10 h-10 text-blue-500"></i>
+        <div id="upload-container" class="max-w-3xl mx-auto mb-16 relative">
+            <div id="drop-zone" class="glass rounded-[32px] p-16 border-2 border-dashed border-blue-500/30 flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 transition-all group overflow-hidden">
+                <div id="scanner" class="scanner-line"></div>
+                <div class="p-6 bg-blue-600/10 rounded-2xl mb-4 group-hover:scale-110 transition">
+                    <i data-lucide="file-text" class="w-12 h-12 text-blue-500"></i>
                 </div>
-                <p class="text-xl font-bold">Drop your Resume here</p>
-                <p class="text-gray-500 mt-2 text-sm">PDF, DOCX supported (Max 5MB)</p>
+                <h3 class="text-2xl font-bold">Upload Resume</h3>
+                <p class="text-slate-500 mt-2">PDF only for deep structural analysis</p>
                 <input type="file" id="file-input" class="hidden" accept=".pdf">
             </div>
         </div>
 
-        <div id="results-section" class="hidden grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="glass p-8 rounded-3xl bento-card flex flex-col items-center">
-                <h3 class="text-gray-400 font-bold text-xs uppercase tracking-widest mb-4">ATS Compatibility</h3>
-                <div class="relative w-32 h-32 flex items-center justify-center">
-                    <svg class="w-full h-full transform -rotate-90">
-                        <circle cx="64" cy="64" r="58" stroke="currentColor" stroke-width="8" fill="transparent" class="text-white/5"/>
-                        <circle id="score-circle" cx="64" cy="64" r="58" stroke="currentColor" stroke-width="8" fill="transparent" stroke-dasharray="364.4" stroke-dashoffset="364.4" class="text-blue-500 transition-all duration-1000"/>
-                    </svg>
-                    <span id="score-text" class="absolute text-3xl font-black">0%</span>
+        <div id="dashboard" class="hidden space-y-8 animate-in fade-in duration-700">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass p-8 rounded-3xl text-center">
+                    <h4 class="text-slate-400 uppercase text-xs font-bold tracking-widest mb-6">ATS Compatibility</h4>
+                    <div class="inline-flex items-center justify-center w-32 h-32 rounded-full border-8 border-blue-500/20 relative">
+                        <span id="ats-score" class="text-4xl font-black">0%</span>
+                    </div>
+                </div>
+
+                <div class="glass p-8 rounded-3xl md:col-span-2">
+                    <h4 class="text-slate-400 uppercase text-xs font-bold tracking-widest mb-6">Critical Skill Gaps</h4>
+                    <div id="gap-tags" class="flex flex-wrap gap-3">
+                        </div>
                 </div>
             </div>
 
-            <div class="glass p-8 rounded-3xl bento-card md:col-span-2">
-                <h3 class="text-gray-400 font-bold text-xs uppercase tracking-widest mb-6">Identified Skill Gaps</h3>
-                <div id="gap-list" class="space-y-4">
-                    </div>
-            </div>
-
-            <div class="glass p-8 rounded-3xl bento-card md:col-span-3">
-                <h3 class="text-gray-400 font-bold text-xs uppercase tracking-widest mb-6">Personalized Learning Path</h3>
-                <div id="course-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="glass p-8 rounded-3xl">
+                <h4 class="text-slate-400 uppercase text-xs font-bold tracking-widest mb-6">Smart Learning Path</h4>
+                <div id="course-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     </div>
             </div>
         </div>
     </main>
+
+    <div class="md:hidden fixed bottom-0 w-full glass border-t border-white/10 px-10 py-4 flex justify-between items-center z-50">
+        <i data-lucide="home" class="text-blue-500"></i>
+        <i data-lucide="bar-chart-2" class="text-slate-400"></i>
+        <i data-lucide="book" class="text-slate-400"></i>
+    </div>
 
     <script src="script.js"></script>
     <script>lucide.createIcons();</script>
