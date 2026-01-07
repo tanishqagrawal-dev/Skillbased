@@ -84,5 +84,79 @@ SkillHire transforms job applications from **guesswork to informed decisions** b
 ---
 
 ## 🏗️ Project Structure
+skillhire-frontend/
+│
+├── index.html
+│
+├── src/
+│ ├── main.jsx
+│ ├── App.jsx
+│ ├── index.css
+│
+│ ├── pages/
+│ │ ├── SignIn.jsx
+│ │ └── Profile.jsx
+│
+│ └── components/
+│ ├── Hero.jsx
+│ ├── NeuralBackground.jsx
+│ ├── IntelligenceFlow.jsx
+│ ├── CompanyMatrix.jsx
+│ ├── ATSOptimizer.jsx
+│ ├── EligibilityChecker.jsx
+│ ├── CourseRecommender.jsx
+│ ├── CareerSimulator.jsx
+│ ├── ResumeUpload.jsx
+│ └── FinalCTA.jsx
+
+
+---
+
+## 🎤 30-Second Judge Explanation
+
+> “Students apply blindly and get rejected without knowing why.  
+SkillHire shows how resumes are screened by ATS, how readiness differs per company, and what skills to improve — before applying.  
+It converts random applications into informed decisions.”
+
+---
+
+## 🚀 Future Scope
+
+- Resume parsing using NLP  
+- ML-based skill gap prediction  
+- Google / LinkedIn OAuth  
+- College-specific hiring insights  
+- Recruiter analytics dashboard  
+
+---
+
+## 👨‍🎓 Target Users
+
+- College students & freshers  
+- Career switchers  
+- Placement cells & training institutes  
+
+---
+
+## 🏆 Why SkillHire Is Different
+
+✔ Not a resume checker  
+✔ Not a job portal  
+✔ Not a generic learning platform  
+
+**SkillHire is a decision-support system for job applications.**
+
+---
+
+## 📌 Status
+
+✅ Frontend complete  
+✅ Hackathon-ready  
+✅ Fully functional demo  
+🧠 Backend & ML extensible  
+
+---
+
+**Apply smarter. Not harder.** 🚀
 
 
