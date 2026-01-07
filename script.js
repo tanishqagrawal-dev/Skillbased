@@ -1,64 +1,74 @@
+// FIREBASE CONFIG (Replace with yours from Firebase Console)
+const firebaseConfig = {
+    apiKey: "AIzaSy...", 
+    authDomain: "skillhire-pro.firebaseapp.com",
+    projectId: "skillhire-pro",
+    appId: "1:..."
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
+
+// UI Elements
 const dropZone = document.getElementById('drop-zone');
 const fileInput = document.getElementById('file-input');
 const scanner = document.getElementById('scanner');
-const resultsSection = document.getElementById('results-section');
+const dashboard = document.getElementById('dashboard');
+const loginBtn = document.getElementById('login-btn');
 
-// Trigger file input on click
+// Google Login Logic
+loginBtn.onclick = () => {
+    auth.signInWithPopup(provider).then((result) => {
+        document.getElementById('user-info').classList.remove('hidden');
+        loginBtn.classList.add('hidden');
+        document.getElementById('user-name').innerText = result.user.displayName;
+        document.getElementById('user-pic').src = result.user.photoURL;
+    });
+};
+
+// File Upload & Scan Animation
 dropZone.onclick = () => fileInput.click();
+fileInput.onchange = (e) => handleAnalysis(e.target.files[0]);
 
-fileInput.onchange = (e) => handleUpload(e.target.files[0]);
-
-async function handleUpload(file) {
+async function handleAnalysis(file) {
     if (!file) return;
-
-    // Start High-Tech Scan Animation
+    
+    // UI Feedback
     scanner.style.display = 'block';
     dropZone.classList.add('opacity-50');
 
-    // Simulate API Call (You will replace this with your actual Python API URL)
+    // MOCK API DELAY (Replace fetch URL with your Python API)
     setTimeout(() => {
-        showResults({
-            score: 78,
-            gaps: ["System Design", "Kubernetes", "Redis Caching"],
-            courses: [
-                { title: "Distributed Systems Expert", platform: "Coursera", link: "#" },
-                { title: "Docker & Kubernetes Masterclass", platform: "Udemy", link: "#" }
-            ]
-        });
         scanner.style.display = 'none';
         dropZone.classList.add('hidden');
+        dashboard.classList.remove('hidden');
+        
+        displayResults({
+            score: 82,
+            gaps: ["Kubernetes", "Redis", "System Design", "Unit Testing"],
+            courses: [
+                { title: "Advanced Backend Arch", site: "Coursera", icon: "code" },
+                { title: "K8s for Developers", site: "Udemy", icon: "layers" },
+                { title: "Cloud Scale Data", site: "YouTube", icon: "cloud" }
+            ]
+        });
     }, 3000);
 }
 
-function showResults(data) {
-    resultsSection.classList.remove('hidden');
+function displayResults(data) {
+    document.getElementById('ats-score').innerText = data.score + "%";
     
-    // Animate ATS Score
-    const circle = document.getElementById('score-circle');
-    const text = document.getElementById('score-text');
-    const offset = 364.4 - (364.4 * data.score) / 100;
-    circle.style.strokeDashoffset = offset;
-    text.innerText = `${data.score}%`;
-
-    // Inject Gaps
-    const gapList = document.getElementById('gap-list');
-    gapList.innerHTML = data.gaps.map(gap => `
-        <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-red-500/20">
-            <span class="font-bold text-red-400">${gap}</span>
-            <span class="text-xs bg-red-500/20 text-red-500 px-3 py-1 rounded-full">Missing</span>
-        </div>
+    const gapTags = document.getElementById('gap-tags');
+    gapTags.innerHTML = data.gaps.map(g => `
+        <span class="px-4 py-2 bg-red-500/10 border border-red-500/30 text-red-400 rounded-full text-sm font-bold animate-pulse">${g}</span>
     `).join('');
 
-    // Inject Courses
-    const courseList = document.getElementById('course-list');
-    courseList.innerHTML = data.courses.map(c => `
-        <div class="p-6 glass rounded-2xl hover:bg-white/10 transition cursor-pointer group">
-            <h4 class="font-bold mb-1">${c.title}</h4>
-            <p class="text-sm text-gray-500">${c.platform}</p>
-            <div class="mt-4 text-blue-500 flex items-center gap-2 text-sm font-bold">
-                Start Learning <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
-            </div>
+    const courseContainer = document.getElementById('course-container');
+    courseContainer.innerHTML = data.courses.map(c => `
+        <div class="p-6 bg-white/5 border border-white/10 rounded-2xl hover:border-blue-500 transition cursor-pointer">
+            <h5 class="font-bold text-lg mb-2">${c.title}</h5>
+            <p class="text-sm text-slate-500">${c.site}</p>
+            <div class="mt-4 text-blue-400 font-bold text-xs">GO TO COURSE →</div>
         </div>
     `).join('');
-    lucide.createIcons();
 }
