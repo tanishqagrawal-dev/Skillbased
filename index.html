@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillGap AI | Career Intelligence Platform</title>
-    
+
     <link rel="stylesheet" href="styles.css">
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 </head>
+
 <body>
 
     <div id="login-screen" class="login-container">
@@ -23,7 +25,7 @@
             </div>
             <h1>Unlock Your Career Potential</h1>
             <p>AI-driven resume analysis and skill bridging for top-tier tech roles.</p>
-            
+
             <button class="google-btn" onclick="handleLogin()">
                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="G">
                 Continue with Google
@@ -35,13 +37,13 @@
     </div>
 
     <div id="app-container" class="app-container hidden">
-        
+        <div id="sidebar-overlay" class="sidebar-overlay"></div>
         <aside class="sidebar">
             <div class="brand">
                 <i data-lucide="cpu"></i>
                 <span>SkillGap</span>
             </div>
-            
+
             <nav>
                 <button class="nav-item active" onclick="switchTab('dashboard')">
                     <i data-lucide="layout-dashboard"></i> Dashboard
@@ -58,7 +60,7 @@
                 <button class="nav-item" onclick="switchTab('profile')">
                     <i data-lucide="user-circle"></i> Profile
                 </button>
-                 <button class="nav-item" onclick="switchTab('faq')">
+                <button class="nav-item" onclick="switchTab('faq')">
                     <i data-lucide="help-circle"></i> FAQ
                 </button>
             </nav>
@@ -71,8 +73,11 @@
         </aside>
 
         <main class="main-content">
-            
+
             <header class="top-bar">
+                <button id="menu-toggle" class="mobile-only">
+                    <i data-lucide="menu"></i>
+                </button>
                 <h2 id="page-title">Overview</h2>
                 <div class="user-pill" onclick="switchTab('profile')">
                     <span id="header-username">Guest User</span>
@@ -137,8 +142,10 @@
                     <div id="analysis-result" class="result-dashboard hidden">
                         <div class="score-circle">
                             <svg viewBox="0 0 36 36" class="circular-chart green">
-                                <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                <path class="circle" stroke-dasharray="82, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <path class="circle-bg"
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                <path class="circle" stroke-dasharray="82, 100"
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                             </svg>
                             <div class="percentage">82%</div>
                         </div>
@@ -180,21 +187,24 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="company-name"><img src="https://logo.clearbit.com/google.com" class="co-logo"> Google</td>
+                                <td class="company-name"><img src="https://logo.clearbit.com/google.com"
+                                        class="co-logo"> Google</td>
                                 <td>Frontend Engineer</td>
                                 <td class="score-high">92%</td>
                                 <td><span class="badge warning">Upskill</span></td>
                                 <td><button class="btn-sm">View Gaps</button></td>
                             </tr>
                             <tr>
-                                <td class="company-name"><img src="https://logo.clearbit.com/amazon.com" class="co-logo"> Amazon</td>
+                                <td class="company-name"><img src="https://logo.clearbit.com/amazon.com"
+                                        class="co-logo"> Amazon</td>
                                 <td>SDE-1</td>
                                 <td class="score-med">84%</td>
                                 <td><span class="badge success">Eligible</span></td>
                                 <td><button class="btn-sm">Apply</button></td>
                             </tr>
-                             <tr>
-                                <td class="company-name"><img src="https://logo.clearbit.com/netflix.com" class="co-logo"> Netflix</td>
+                            <tr>
+                                <td class="company-name"><img src="https://logo.clearbit.com/netflix.com"
+                                        class="co-logo"> Netflix</td>
                                 <td>Sr. UI Eng</td>
                                 <td class="score-high">95%</td>
                                 <td><span class="badge danger">Not Ready</span></td>
@@ -204,8 +214,8 @@
                     </table>
                 </div>
             </section>
-            
-             <section id="learning" class="view-section hidden">
+
+            <section id="learning" class="view-section hidden">
                 <div class="learning-grid">
                     <div class="course-card">
                         <div class="course-img" style="background: linear-gradient(45deg, #FF9966, #FF5E62);"></div>
@@ -232,7 +242,8 @@
                 <div class="profile-layout">
                     <div class="profile-card">
                         <div class="avatar-upload">
-                            <img id="profile-img-preview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Profile">
+                            <img id="profile-img-preview" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+                                alt="Profile">
                             <button class="edit-icon"><i data-lucide="camera"></i></button>
                         </div>
                         <h3 id="profile-name-display">Alex Johnson</h3>
@@ -254,26 +265,30 @@
                                 <label>Target Role</label>
                                 <input type="text" id="input-role" value="Software Engineer">
                             </div>
-                             <div class="form-group">
+                            <div class="form-group">
                                 <label>LinkedIn URL</label>
-                                <input type="text" placeholder="https://linkedin.com/in/..." >
+                                <input type="text" placeholder="https://linkedin.com/in/...">
                             </div>
                         </div>
                         <button class="btn-primary" onclick="saveProfile()">Save Changes</button>
                     </div>
                 </div>
             </section>
-            
+
             <section id="faq" class="view-section hidden">
                 <div class="faq-container">
                     <h3>Frequently Asked Questions</h3>
                     <div class="faq-item">
-                        <button class="faq-question">How is the ATS score calculated? <i data-lucide="chevron-down"></i></button>
-                        <div class="faq-answer">We use a proprietary algorithm that scans for keywords, formatting, and quantifiable impact metrics used by Fortune 500 ATS systems.</div>
+                        <button class="faq-question">How is the ATS score calculated? <i
+                                data-lucide="chevron-down"></i></button>
+                        <div class="faq-answer">We use a proprietary algorithm that scans for keywords, formatting, and
+                            quantifiable impact metrics used by Fortune 500 ATS systems.</div>
                     </div>
-                     <div class="faq-item">
-                        <button class="faq-question">Is my resume data stored? <i data-lucide="chevron-down"></i></button>
-                        <div class="faq-answer">No. We process your resume in real-time within your session. Data is not permanently stored on our servers for privacy.</div>
+                    <div class="faq-item">
+                        <button class="faq-question">Is my resume data stored? <i
+                                data-lucide="chevron-down"></i></button>
+                        <div class="faq-answer">No. We process your resume in real-time within your session. Data is not
+                            permanently stored on our servers for privacy.</div>
                     </div>
                 </div>
             </section>
@@ -284,6 +299,5 @@
     <script src="script.js"></script>
     <script>lucide.createIcons();</script>
 </body>
+
 </html>
-
-

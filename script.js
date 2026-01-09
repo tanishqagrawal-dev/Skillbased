@@ -9,12 +9,39 @@ let user = {
 document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
     checkLogin();
-    
+
     // Setup FAQ Accordion
     document.querySelectorAll('.faq-question').forEach(btn => {
         btn.addEventListener('click', () => {
             const answer = btn.nextElementSibling;
             answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    function toggleMenu() {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+    }
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', toggleMenu);
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', toggleMenu);
+    }
+
+    // Close sidebar when clicking menu items on mobile
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
+                toggleMenu();
+            }
         });
     });
 });
@@ -27,7 +54,7 @@ function handleLogin() {
         user.name = "Alex Johnson";
         user.email = "alex.j@skillgap.ai";
         user.photo = "https://api.dicebear.com/7.x/avataaars/svg?seed=Alex";
-        
+
         saveUserToLocal();
         updateUI();
         document.getElementById('login-screen').classList.add('hidden');
@@ -73,20 +100,20 @@ function switchTab(tabId) {
     // Hide all sections
     document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
     document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-    
+
     // Deactivate nav items
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    
+
     // Show Target
     const target = document.getElementById(tabId);
-    if(target) {
+    if (target) {
         target.classList.remove('hidden');
         setTimeout(() => target.classList.add('active'), 10); // Fade in trick
     }
-    
+
     // Highlight Nav
     event.currentTarget.classList.add('active');
-    
+
     // Update Title
     const titles = {
         'dashboard': 'Overview',
@@ -104,10 +131,10 @@ function simulateUpload() {
     const zone = document.getElementById('drop-zone');
     const loader = document.getElementById('analysis-loader');
     const result = document.getElementById('analysis-result');
-    
+
     zone.classList.add('hidden');
     loader.classList.remove('hidden');
-    
+
     setTimeout(() => {
         loader.classList.add('hidden');
         result.classList.remove('hidden');
@@ -118,7 +145,7 @@ function simulateUpload() {
 function saveProfile() {
     const newName = document.getElementById('input-name').value;
     const newRole = document.getElementById('input-role').value;
-    
+
     user.name = newName;
     user.role = newRole;
     saveUserToLocal();
