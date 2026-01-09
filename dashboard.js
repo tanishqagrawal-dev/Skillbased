@@ -71,22 +71,39 @@ document.addEventListener('DOMContentLoaded', () => {
             sidebar.classList.toggle('collapsed');
             const mainContent = document.querySelector('.main-content');
             if (mainContent) mainContent.classList.toggle('expanded');
-            // Trigger resize for charts
             setTimeout(() => window.dispatchEvent(new Event('resize')), 300);
         }
     }
+    // Expose for usage
+    window.closeMobileMenu = function () {
+        if (typeof handleMenuClose === 'function') handleMenuClose();
+    };
 
     if (menuToggle) menuToggle.addEventListener('click', toggleMenu);
     if (closeSidebar) closeSidebar.addEventListener('click', toggleMenu);
     if (overlay) overlay.addEventListener('click', toggleMenu);
 
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('click', () => {
-            if (window.innerWidth <= 768 && sidebar && sidebar.classList.contains('active')) {
-                toggleMenu();
+    // Helper to close menu (Mobile: close fully, Desktop: collapse)
+    function handleMenuClose() {
+        if (!sidebar) return;
+
+        if (window.innerWidth <= 768) {
+            // Mobile: Close fully
+            if (sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                if (overlay) overlay.classList.remove('active');
             }
-        });
-    });
+        } else {
+            // Desktop: Auto-collapse if user wants it "same" as mobile (interactive)
+            // If they mean "close" as in "get out of the way", collapsing is the way.
+            if (!sidebar.classList.contains('collapsed')) {
+                sidebar.classList.add('collapsed');
+                const mainContent = document.querySelector('.main-content');
+                if (mainContent) mainContent.classList.add('expanded');
+                setTimeout(() => window.dispatchEvent(new Event('resize')), 300);
+            }
+        }
+    }
 
     // Profile Photo Upload Handling
     const avatarInput = document.getElementById('avatar-input');
@@ -199,7 +216,7 @@ function handleLogout() {
         auth.signOut().then(() => {
             localStorage.removeItem('skillhire_user');
             localStorage.removeItem('skillhire_guest');
-            window.location.href = 'auth.html';
+            window.location.href = 'index.html';
         });
     } else {
         localStorage.removeItem('skillhire_user');
@@ -267,8 +284,8 @@ function setupAuthObserver() {
                 window.dispatchEvent(new Event('resize'));
             }, 500);
         } else {
-            console.log("No authenticated user or guest flag, redirecting to login...");
-            window.location.href = 'auth.html';
+            console.log("No authenticated user or guest flag, redirecting to landing page...");
+            window.location.href = 'index.html';
         }
     });
 }
@@ -332,16 +349,23 @@ function switchTab(tabId) {
         'companies': 'Market Intelligence',
         'profile': 'My Profile',
         'learning': 'Learning Roadmap',
-        'faq': 'Help Center'
+        'faq': 'Help Center',
+        'resume-builder': 'Resume Builder',
+        'interview-prep': 'Mock Interview',
+        'dsa-practice': 'DSA Practice',
+        'roadmap': 'Career Roadmap'
     };
     const titleEl = document.getElementById('page-title');
     if (titleEl) titleEl.innerText = titles[tabId] || 'Dashboard';
 
     const sidebar = document.querySelector('.sidebar');
     const overlay = document.getElementById('sidebar-overlay');
-    if (window.innerWidth <= 768 && sidebar && sidebar.classList.contains('active')) {
-        sidebar.classList.remove('active');
-        if (overlay) overlay.classList.remove('active');
+
+    // Close menu (Mobile or Desktop based on request)
+    if (typeof handleMenuClose === 'function') {
+        handleMenuClose();
+    } else if (typeof closeMobileMenu === 'function') {
+        closeMobileMenu();
     }
 }
 
@@ -731,3 +755,28 @@ async function updateProgress() {
         }
     }
 }
+
+// --- THEME LOGIC ---
+function toggleTheme() {
+    const isLight = document.body.dataset.theme === 'light';
+    const newTheme = isLight ? 'dark' : 'light';
+
+    document.body.dataset.theme = newTheme;
+    localStorage.setItem('skillhire_theme', newTheme);
+    updateThemeIcon();
+}
+
+function updateThemeIcon() {
+    const isLight = document.body.dataset.theme === 'light';
+    const btn = document.getElementById('theme-toggle');
+    if (btn) {
+        const icon = isLight ? 'moon' : 'sun';
+        btn.innerHTML = `<i data-lucide="${icon}"></i>`;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+}
+
+// Initialize Theme
+const savedTheme = localStorage.getItem('skillhire_theme') || 'dark';
+document.body.dataset.theme = savedTheme;
+updateThemeIcon();

@@ -1,0 +1,198 @@
+/* Resume Builder Styles */
+
+.resume-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    height: calc(100vh - 120px);
+    overflow: hidden;
+}
+
+.resume-editor {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.accordion-item {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    overflow: hidden;
+}
+
+.accordion-header {
+    padding: 12px 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+
+.accordion-body {
+    display: none;
+    padding: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.accordion-item.active .accordion-body {
+    display: block;
+}
+
+.resume-preview-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+}
+
+.preview-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.paper {
+    background: white;
+    color: black;
+    padding: 40px;
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    flex: 1;
+    font-family: 'Times New Roman', Times, serif;
+    /* Classic resume font */
+}
+
+/* Resume Paper Styles (Black text on white) */
+.paper h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.paper h3 {
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    color: #333;
+    text-transform: uppercase;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.paper p,
+.paper li {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #444;
+}
+
+.paper .res-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.paper .res-contact {
+    font-size: 12px;
+    color: #666;
+}
+
+.prev-item {
+    margin-bottom: 15px;
+}
+
+/* ATS Box */
+.ats- box {
+    margin-top: auto;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.ats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ats-bar {
+    width: 60%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#ats-progress {
+    height: 100%;
+    transition: width 0.5s ease, background 0.3s;
+}
+
+#ats-feedback {
+    list-style: none;
+    padding: 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+#ats-feedback li {
+    margin-bottom: 5px;
+}
+
+#ats-feedback li::before {
+    content: "•";
+    color: var(--primary);
+    margin-right: 5px;
+}
+
+.btn-outline-sm {
+    background: transparent;
+    border: 1px dashed var(--border);
+    color: var(--text-muted);
+    padding: 8px;
+    width: 100%;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-outline-sm:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.btn-link-danger {
+    background: none;
+    border: none;
+    color: #ef4444;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Tablet/Mobile Adjustments */
+@media (max-width: 1024px) {
+    .resume-container {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .paper {
+        min-height: 500px;
+    }
+}

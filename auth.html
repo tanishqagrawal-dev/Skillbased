@@ -211,6 +211,67 @@
             width: 18px;
             height: 18px;
         }
+
+        /* Light Theme Overrides */
+        body[data-theme="light"] {
+            background: #F8FAFC !important;
+            color: #0F172A;
+        }
+
+        body[data-theme="light"] .auth-card {
+            background: #ffffff;
+            border-color: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        body[data-theme="light"] .auth-card h1 {
+            color: #0F172A;
+            background: none;
+            -webkit-text-fill-color: initial;
+        }
+
+        body[data-theme="light"] .input-field {
+            background: #F1F5F9;
+            color: #0F172A;
+            border-color: #E2E8F0;
+        }
+
+        body[data-theme="light"] .input-field::placeholder {
+            color: #94A3B8;
+        }
+
+        body[data-theme="light"] .theme-toggle {
+            color: #0F172A;
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body[data-theme="light"] .theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .theme-toggle-auth {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 20;
+        }
+
+        .theme-toggle-auth:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 
@@ -222,6 +283,10 @@
         <i data-lucide="arrow-left"></i>
         <span>Back</span>
     </a>
+
+    <button id="theme-toggle" class="theme-toggle-auth" onclick="toggleTheme()">
+        <i data-lucide="sun"></i>
+    </button>
 
     <div class="auth-card">
         <div class="auth-logo">

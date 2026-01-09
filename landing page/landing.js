@@ -52,3 +52,31 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// --- THEME LOGIC ---
+function toggleTheme() {
+    const isLight = document.body.dataset.theme === 'light';
+    const newTheme = isLight ? 'dark' : 'light';
+
+    document.body.dataset.theme = newTheme;
+    localStorage.setItem('skillhire_theme', newTheme);
+    updateThemeIcon();
+}
+
+function updateThemeIcon() {
+    const isLight = document.body.dataset.theme === 'light';
+    const btn = document.getElementById('theme-toggle');
+    if (btn) {
+        const icon = isLight ? 'moon' : 'sun';
+        // Basic lucide re-render approach (or innerHTML swap)
+        btn.innerHTML = `<i data-lucide="${icon}"></i>`;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+}
+
+// Initialize Theme on Load (Outside DOMContentLoaded to avoid FOUC if possible, but JS file usually loads late)
+const savedTheme = localStorage.getItem('skillhire_theme') || 'dark';
+document.body.dataset.theme = savedTheme;
+updateThemeIcon();
+
+window.toggleTheme = toggleTheme;

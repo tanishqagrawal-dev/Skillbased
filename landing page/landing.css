@@ -313,6 +313,74 @@ th {
     color: var(--text-muted);
 }
 
+/* Light Theme Variables */
+[data-theme="light"] {
+    --primary: #0D9488;
+    /* Darker Teal */
+    --primary-glow: rgba(13, 148, 136, 0.2);
+    --secondary: #6D28D9;
+    --secondary-glow: rgba(109, 40, 217, 0.2);
+    --dark-bg: #F8FAFC;
+    /* Light Slate Background */
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --text-main: #0F172A;
+    /* Slate 900 */
+    --text-muted: #475569;
+    /* Slate 600 */
+    --border: rgba(0, 0, 0, 0.1);
+    --glass: rgba(255, 255, 255, 0.5);
+    background-color: #F8FAFC;
+    color: #0F172A;
+}
+
+body[data-theme="light"] {
+    background-color: #F8FAFC;
+}
+
+[data-theme="light"] .bg-glow,
+[data-theme="light"] .bg-glow-2 {
+    opacity: 0.6;
+}
+
+[data-theme="light"] .navbar {
+    background: rgba(255, 255, 255, 0.8);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .card,
+[data-theme="light"] .comparison-container {
+    background: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .hero-headline {
+    background: linear-gradient(to right, #0F172A, #334155);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-right: 12px;
+}
+
+.theme-toggle:hover {
+    background: var(--card-bg);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
 
@@ -321,9 +389,46 @@ th {
     .feature-item.reverse {
         grid-template-columns: 1fr;
         text-align: center;
+        gap: 40px;
+    }
+
+    .hero-content {
+        order: 1;
+    }
+
+    .hero-visual {
+        order: 2;
     }
 
     .hero-headline {
         font-size: 3rem;
+    }
+
+    .navbar {
+        padding: 16px 5%;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-headline {
+        font-size: 2.2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+
+    section {
+        padding: 60px 4%;
+    }
+
+    .hero {
+        padding-top: 100px;
+        padding-bottom: 40px;
+    }
+
+    .feature-visual img {
+        margin-top: 20px;
     }
 }

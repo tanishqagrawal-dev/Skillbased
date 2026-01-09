@@ -7,12 +7,17 @@
     <title>Skill Hire | Career Intelligence Platform</title>
 
     <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="resume_builder.css">
+    <link rel="stylesheet" href="interview.css">
+    <link rel="stylesheet" href="dsa.css">
+    <link rel="stylesheet" href="roadmap.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -70,6 +75,18 @@
                 <button class="nav-item active" onclick="switchTab('dashboard')">
                     <i data-lucide="layout-dashboard"></i> Dashboard
                 </button>
+                <button class="nav-item" onclick="switchTab('resume-builder')">
+                    <i data-lucide="file-text"></i> Resume Builder
+                </button>
+                <button class="nav-item" onclick="switchTab('interview-prep')">
+                    <i data-lucide="video"></i> Mock Interview
+                </button>
+                <button class="nav-item" onclick="switchTab('dsa-practice')">
+                    <i data-lucide="code-2"></i> DSA Practice
+                </button>
+                <button class="nav-item" onclick="switchTab('roadmap')">
+                    <i data-lucide="map"></i> My Roadmap
+                </button>
                 <button class="nav-item" onclick="switchTab('analyzer')">
                     <i data-lucide="scan-line"></i> AI Analyzer
                 </button>
@@ -77,7 +94,7 @@
                     <i data-lucide="building-2"></i> Company Intel
                 </button>
                 <button class="nav-item" onclick="switchTab('learning')">
-                    <i data-lucide="graduation-cap"></i> Learning Path
+                    <i data-lucide="graduation-cap"></i> Courses
                 </button>
                 <button class="nav-item" onclick="switchTab('profile')">
                     <i data-lucide="user-circle"></i> Profile
@@ -109,10 +126,14 @@
                         <h2 id="page-title">Overview</h2>
                     </div>
                 </div>
-                <div class="user-pill" onclick="switchTab('profile')">
-                    <span id="header-username">Guest User</span>
-                    <img id="header-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User">
-                </div>
+                <div style="display: flex; align-items: center; gap: 12px; margin-left: auto;">
+                    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">
+                        <i data-lucide="sun"></i>
+                    </button>
+                    <div class="user-pill" onclick="switchTab('profile')">
+                        <span id="header-username">Guest User</span>
+                        <img id="header-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User">
+                    </div>
             </header>
 
             <section id="dashboard" class="view-section active">
@@ -340,11 +361,412 @@
                 </div>
             </section>
 
+            <!-- New Sections Placeholders -->
+            <section id="resume-builder" class="view-section hidden">
+                <div class="resume-container">
+                    <!-- Left: Editor Form -->
+                    <div class="resume-editor">
+                        <div class="editor-header">
+                            <h3><i data-lucide="edit-3"></i> Editor</h3>
+                            <div style="display: flex; gap: 10px;">
+                                <button class="btn-sm" onclick="generateRandomData()">Auto-Fill</button>
+                                <button class="btn-sm" onclick="updateResume()">Reflow</button>
+                            </div>
+                        </div>
+
+                        <div class="accordion">
+                            <!-- Personal Info -->
+                            <div class="accordion-item active">
+                                <div class="accordion-header" onclick="toggleAccordion(this)">
+                                    <span>Personal Info</span>
+                                    <i data-lucide="chevron-down"></i>
+                                </div>
+                                <div class="accordion-body">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label>Full Name</label>
+                                            <input type="text" id="res-name" oninput="updateResume()"
+                                                placeholder="John Doe">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Job Title</label>
+                                            <input type="text" id="res-role" oninput="updateResume()"
+                                                placeholder="Software Engineer">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" id="res-email" oninput="updateResume()"
+                                                placeholder="john@example.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Phone</label>
+                                            <input type="text" id="res-phone" oninput="updateResume()"
+                                                placeholder="+1 234 567 890">
+                                        </div>
+                                        <div class="form-group full">
+                                            <label>Summary</label>
+                                            <textarea id="res-summary" oninput="updateResume()" rows="3"
+                                                placeholder="Brief professional summary..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Skills -->
+                            <div class="accordion-item">
+                                <div class="accordion-header" onclick="toggleAccordion(this)">
+                                    <span>Skills</span>
+                                    <i data-lucide="chevron-down"></i>
+                                </div>
+                                <div class="accordion-body">
+                                    <div class="form-group full">
+                                        <label>Technical Skills (comma separated)</label>
+                                        <textarea id="res-skills" oninput="updateResume()" rows="2"
+                                            placeholder="JavaScript, React, Python, AWS..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Experience -->
+                            <div class="accordion-item">
+                                <div class="accordion-header" onclick="toggleAccordion(this)">
+                                    <span>Experience</span>
+                                    <i data-lucide="chevron-down"></i>
+                                </div>
+                                <div class="accordion-body">
+                                    <div id="experience-list">
+                                        <!-- Dynamic Items -->
+                                    </div>
+                                    <button class="btn-outline-sm" onclick="addExperience()">+ Add Position</button>
+                                </div>
+                            </div>
+
+                            <!-- Education -->
+                            <div class="accordion-item">
+                                <div class="accordion-header" onclick="toggleAccordion(this)">
+                                    <span>Education</span>
+                                    <i data-lucide="chevron-down"></i>
+                                </div>
+                                <div class="accordion-body">
+                                    <div id="education-list">
+                                        <!-- Dynamic Items -->
+                                    </div>
+                                    <button class="btn-outline-sm" onclick="addEducation()">+ Add Education</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ats-box">
+                            <div class="ats-header">
+                                <h4>ATS Score: <span id="ats-score">0</span>/100</h4>
+                                <div class="ats-bar">
+                                    <div id="ats-progress" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <ul id="ats-feedback">
+                                <li>Start typing to get feedback...</li>
+                            </ul>
+                            <div class="form-group full" style="margin-top: 15px;">
+                                <label>Target Job Description (for keyword matching)</label>
+                                <textarea id="target-jd" oninput="calculateATS()" rows="3"
+                                    placeholder="Paste JD here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Preview -->
+                    <div class="resume-preview-container">
+                        <div class="preview-actions">
+                            <button class="btn-sm" onclick="downloadPDF()"><i data-lucide="download"></i> Download
+                                PDF</button>
+                        </div>
+                        <div id="resume-preview" class="paper">
+                            <div class="res-header">
+                                <h1 id="prev-name">Your Name</h1>
+                                <p id="prev-role">Target Role</p>
+                                <div class="res-contact">
+                                    <span id="prev-email">email@example.com</span> |
+                                    <span id="prev-phone">phone</span>
+                                </div>
+                            </div>
+                            <div class="res-section">
+                                <h3>Professional Summary</h3>
+                                <hr>
+                                <p id="prev-summary">Summary goes here...</p>
+                            </div>
+                            <div class="res-section">
+                                <h3>Skills</h3>
+                                <hr>
+                                <p id="prev-skills">Skills list...</p>
+                            </div>
+                            <div class="res-section">
+                                <h3>Experience</h3>
+                                <hr>
+                                <div id="prev-experience"></div>
+                            </div>
+                            <div class="res-section">
+                                <h3>Education</h3>
+                                <hr>
+                                <div id="prev-education"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="interview-prep" class="view-section hidden">
+                <div class="interview-container">
+                    <!-- Screen 1: Setup -->
+                    <div id="int-setup" class="setup-card" data-tilt>
+                        <h2><i data-lucide="settings-2"></i> Configure Interview</h2>
+                        <div class="form-group full">
+                            <label>Target Company</label>
+                            <select id="int-company">
+                                <option value="Google">Google</option>
+                                <option value="Amazon">Amazon</option>
+                                <option value="Microsoft">Microsoft</option>
+                                <option value="Meta">Meta</option>
+                                <option value="Netflix">Netflix</option>
+                            </select>
+                        </div>
+                        <div class="form-group full">
+                            <label>Role</label>
+                            <select id="int-role">
+                                <option value="SDE-1">Software Engineer I</option>
+                                <option value="SDE-2">Senior Software Engineer</option>
+                                <option value="PM">Product Manager</option>
+                                <option value="DS">Data Scientist</option>
+                            </select>
+                        </div>
+                        <div class="form-group full">
+                            <label>Duration</label>
+                            <select id="int-duration">
+                                <option value="15">15 Minutes (Rapid)</option>
+                                <option value="30">30 Minutes (Standard)</option>
+                                <option value="45">45 Minutes (Deep Dive)</option>
+                            </select>
+                        </div>
+                        <div class="setup-footer">
+                            <button class="btn-primary" onclick="startInterview()">Start Interview</button>
+                        </div>
+                    </div>
+
+                    <!-- Screen 2: Active Interview (Hidden by default) -->
+                    <div id="int-active" class="interview-interface hidden">
+                        <div class="int-header">
+                            <div class="timer-badge"><i data-lucide="timer"></i> <span id="int-timer">15:00</span></div>
+                            <button class="btn-danger-sm" onclick="endInterview(true)">End Session</button>
+                        </div>
+
+                        <div class="video-grid">
+                            <div class="video-box ai-feed">
+                                <div class="ai-avatar">
+                                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=AI_Interviewer" alt="AI">
+                                    <div class="pulse-ring"></div>
+                                </div>
+                                <div class="audio-wave hidden" id="ai-speaking-indicator">
+                                    <span></span><span></span><span></span><span></span>
+                                </div>
+                                <p class="feed-label">AI Interviewer</p>
+                            </div>
+                            <div class="video-box user-feed">
+                                <video id="user-webcam" autoplay playsinline muted></video>
+                                <p class="feed-label">You</p>
+                            </div>
+                        </div>
+
+                        <div class="question-card">
+                            <h3 id="current-question">Waiting to start...</h3>
+                            <div class="controls">
+                                <button class="btn-secondary" onclick="speakQuestion()"><i data-lucide="volume-2"></i>
+                                    Replay</button>
+                                <button class="btn-primary" onclick="nextQuestion()">Next Question <i
+                                        data-lucide="arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Screen 3: Feedback (Hidden) -->
+                    <div id="int-feedback" class="feedback-report hidden">
+                        <h2>Interview Analysis</h2>
+                        <div class="score-row">
+                            <div class="score-card">
+                                <h4>Confidence</h4>
+                                <div class="big-score">85%</div>
+                            </div>
+                            <div class="score-card">
+                                <h4>Clarity</h4>
+                                <div class="big-score">92%</div>
+                            </div>
+                            <div class="score-card">
+                                <h4>Technical</h4>
+                                <div class="big-score">78%</div>
+                            </div>
+                        </div>
+                        <div class="feedback-notes">
+                            <h3>AI Feedback</h3>
+                            <ul id="feedback-list">
+                                <li><strong>Strength:</strong> Good eye contact and clear voice projection.</li>
+                                <li><strong>Improvement:</strong> You used filler words ("um") 12 times.</li>
+                                <li><strong>Technical:</strong> The answer to the System Design question lacked
+                                    discussion on database sharding.</li>
+                            </ul>
+                        </div>
+                        <button class="btn-primary" onclick="resetInterview()">Back to Dashboard</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="dsa-practice" class="view-section hidden">
+                <div class="dsa-container">
+                    <!-- Left: Problem List -->
+                    <div class="problem-list-panel">
+                        <div class="panel-header">
+                            <h3><i data-lucide="list"></i> Problems</h3>
+                            <div class="filter-chips">
+                                <span class="chip active">All</span>
+                                <span class="chip">Google</span>
+                                <span class="chip">Amazon</span>
+                                <span class="chip">Hard</span>
+                            </div>
+                        </div>
+                        <div id="dsa-problems-list" class="scrollable-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Right: Editor & Details -->
+                    <div class="problem-workspace">
+                        <div id="dsa-welcome" class="workspace-placeholder">
+                            <i data-lucide="code-2" style="width:64px; height:64px; opacity:0.5;"></i>
+                            <h3>Select a problem to start coding</h3>
+                            <p>Master 90+ Patterns for Top Product Companies</p>
+                        </div>
+
+                        <div id="dsa-editor-view" class="editor-view hidden">
+                            <!-- Problem Description -->
+                            <div class="problem-desc">
+                                <div class="desc-header">
+                                    <h2 id="prob-title">Two Sum</h2>
+                                    <span class="badge easy" id="prob-difficulty">Easy</span>
+                                </div>
+                                <p id="prob-desc">Given an array of integers nums and an integer target, return indices
+                                    of the two numbers such that they add up to target.</p>
+
+                                <div class="companies-tag" id="prob-companies">
+                                    <i data-lucide="briefcase"></i> Asked at: Google, Amazon, Meta
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <div class="editor-controls">
+                                <select id="prog-lang">
+                                    <option value="javascript">JavaScript</option>
+                                    <option value="python">Python</option>
+                                    <option value="java">Java</option>
+                                    <option value="cpp">C++</option>
+                                </select>
+                                <div class="ctrl-right">
+                                    <button class="btn-secondary-sm" onclick="getHint()"><i data-lucide="lightbulb"></i>
+                                        Neuron AI Hint</button>
+                                    <button class="btn-primary-sm" onclick="runCode()"><i data-lucide="play"></i> Run
+                                        Code</button>
+                                </div>
+                            </div>
+
+                            <!-- Code Editor -->
+                            <div class="code-editor-container">
+                                <textarea id="code-area" spellcheck="false">function twoSum(nums, target) {
+    // Write your solution here...
+}</textarea>
+                            </div>
+
+                            <!-- Output / Hints -->
+                            <div class="output-panel">
+                                <div class="tabs">
+                                    <button class="tab active" onclick="switchOutputTab('testcase')">Test
+                                        Results</button>
+                                    <button class="tab" onclick="switchOutputTab('neuron')">Neuron AI Coach</button>
+                                </div>
+                                <div id="tab-testcase" class="tab-content">
+                                    <div id="run-status" class="status-msg">Click "Run Code" to verify solution.</div>
+                                </div>
+                                <div id="tab-neuron" class="tab-content hidden">
+                                    <div id="ai-hints-container">
+                                        <p class="hint-placeholder">Need help? Click "Neuron AI Hint" above.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="roadmap" class="view-section hidden">
+                <div class="roadmap-container">
+                    <!-- Step 1: Input -->
+                    <div id="roadmap-input" class="setup-card" style="max-width: 600px;">
+                        <h2><i data-lucide="compass"></i> Create Your Career Path</h2>
+                        <div class="form-grid">
+                            <div class="form-group full">
+                                <label>Target Role</label>
+                                <select id="road-role">
+                                    <option value="frontend">Frontend Engineer</option>
+                                    <option value="backend">Backend Engineer</option>
+                                    <option value="fullstack">Full Stack Developer</option>
+                                    <option value="ai">AI/ML Engineer</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Current Level</label>
+                                <select id="road-level">
+                                    <option value="student">Student / Fresher</option>
+                                    <option value="junior">Junior (1-3 Years)</option>
+                                    <option value="mid">Mid-Senior (3-5 Years)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Timeline Goal</label>
+                                <select id="road-time">
+                                    <option value="3">3 Months (Aggressive)</option>
+                                    <option value="6">6 Months (Balanced)</option>
+                                    <option value="12">1 Year (Deep Dive)</option>
+                                </select>
+                            </div>
+                            <div class="form-group full">
+                                <label>Focus Areas (Optional)</label>
+                                <input type="text" id="road-focus" placeholder="e.g. React, Python, System Design">
+                            </div>
+                        </div>
+                        <div class="setup-footer">
+                            <button class="btn-primary full-width" onclick="generateRoadmap()">Generate Roadmap</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Timeline Visualization (Hidden) -->
+                    <div id="roadmap-view" class="timeline-view hidden">
+                        <div class="view-header">
+                            <button class="btn-secondary-sm" onclick="resetRoadmap()"><i data-lucide="arrow-left"></i>
+                                Edit Config</button>
+                            <h2>Your Personalized Roadmap</h2>
+                        </div>
+
+                        <div class="timeline-container" id="timeline-render">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </main>
     </div>
 
     <script src="config.js"></script>
     <script src="dashboard.js"></script>
+    <script src="resume_builder.js"></script>
+    <script src="interview.js"></script>
+    <script src="dsa.js"></script>
+    <script src="roadmap.js"></script>
     <script>lucide.createIcons();</script>
 
 
