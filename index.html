@@ -14,14 +14,13 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
 
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
 </head>
 
 <body>
-    <div id="g_id_onload" data-client_id="456987112710-bqo6d88312hsuje2qmg21hitdljf0cm9.apps.googleusercontent.com"
-        data-callback="handleCredentialResponse" data-auto_prompt="false">
-    </div>
 
 
     <div id="login-screen" class="login-container">
@@ -33,62 +32,62 @@
             <h1>Unlock Your Career Potential</h1>
             <p>AI-driven resume analysis and skill bridging for top-tier tech roles.</p>
 
-            <div id="login-options">
-                <div class="g_id_signin" data-type="standard" data-size="large" data-theme="filled_blue"
-                    data-text="continue_with" data-shape="rectangular" data-logo_alignment="left" data-width="300">
-                </div>
+            <button class="google-btn firebase-google-btn" onclick="handleGoogleLogin()">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="G" style="width: 20px;">
+                Continue with Google
+            </button>
 
-                <p class="login-subtext">OR</p>
+            <p class="login-subtext">OR</p>
 
-                <div class="manual-auth-buttons">
-                    <button class="btn-outline full-width" onclick="showAuthView('email-login')">
-                        <i data-lucide="mail"></i> Email Login
-                    </button>
-                    <button class="btn-outline full-width" onclick="showAuthView('signup')">
-                        <i data-lucide="user-plus"></i> Create Account
-                    </button>
-                    <button class="google-btn" onclick="handleLogin()">
-                        <i data-lucide="user"></i> Continue as Guest
-                    </button>
-                </div>
-            </div>
-
-            <div id="email-login-form" class="hidden">
-                <h2>Welcome Back</h2>
-                <div class="form-group">
-                    <input type="email" id="login-email" placeholder="Email Address">
-                </div>
-                <div class="form-group">
-                    <input type="password" id="login-password" placeholder="Password">
-                </div>
-                <button class="btn-primary full-width" onclick="handleManualLogin()">Login</button>
-                <p class="toggle-text">New here? <a href="#" onclick="showAuthView('signup')">Create Account</a></p>
-                <button class="btn-back" onclick="showAuthView('options')"><i data-lucide="arrow-left"></i>
-                    Back</button>
-            </div>
-
-            <div id="signup-form" class="hidden">
-                <h2>Create Account</h2>
-                <div class="form-group">
-                    <input type="text" id="signup-name" placeholder="Full Name">
-                </div>
-                <div class="form-group">
-                    <input type="email" id="signup-email" placeholder="Email Address">
-                </div>
-                <div class="form-group">
-                    <input type="password" id="signup-password" placeholder="Password">
-                </div>
-                <button class="btn-primary full-width" onclick="handleManualSignup()">Sign Up</button>
-                <p class="toggle-text">Already have an account? <a href="#"
-                        onclick="showAuthView('email-login')">Login</a></p>
-                <button class="btn-back" onclick="showAuthView('options')"><i data-lucide="arrow-left"></i>
-                    Back</button>
-            </div>
-
-            <div class="login-footer">
-                <span>Privacy Policy</span> • <span>Terms of Service</span>
+            <div class="manual-auth-buttons">
+                <button class="btn-outline full-width" onclick="showAuthView('email-login')">
+                    <i data-lucide="mail"></i> Email Login
+                </button>
+                <button class="btn-outline full-width" onclick="showAuthView('signup')">
+                    <i data-lucide="user-plus"></i> Create Account
+                </button>
+                <button class="google-btn" onclick="handleLogin()">
+                    <i data-lucide="user"></i> Continue as Guest
+                </button>
             </div>
         </div>
+
+        <div id="email-login-form" class="hidden">
+            <h2>Welcome Back</h2>
+            <div class="form-group">
+                <input type="email" id="login-email" placeholder="Email Address">
+            </div>
+            <div class="form-group">
+                <input type="password" id="login-password" placeholder="Password">
+            </div>
+            <button class="btn-primary full-width" onclick="handleManualLogin()">Login</button>
+            <p class="toggle-text">New here? <a href="#" onclick="showAuthView('signup')">Create Account</a></p>
+            <button class="btn-back" onclick="showAuthView('options')"><i data-lucide="arrow-left"></i>
+                Back</button>
+        </div>
+
+        <div id="signup-form" class="hidden">
+            <h2>Create Account</h2>
+            <div class="form-group">
+                <input type="text" id="signup-name" placeholder="Full Name">
+            </div>
+            <div class="form-group">
+                <input type="email" id="signup-email" placeholder="Email Address">
+            </div>
+            <div class="form-group">
+                <input type="password" id="signup-password" placeholder="Password">
+            </div>
+            <button class="btn-primary full-width" onclick="handleManualSignup()">Sign Up</button>
+            <p class="toggle-text">Already have an account? <a href="#" onclick="showAuthView('email-login')">Login</a>
+            </p>
+            <button class="btn-back" onclick="showAuthView('options')"><i data-lucide="arrow-left"></i>
+                Back</button>
+        </div>
+
+        <div class="login-footer">
+            <span>Privacy Policy</span> • <span>Terms of Service</span>
+        </div>
+    </div>
     </div>
 
     <div id="app-container" class="app-container hidden">
@@ -452,7 +451,6 @@
         </main>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
     <script src="script.js"></script>
     <script>lucide.createIcons();</script>
 </body>

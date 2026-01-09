@@ -1,14 +1,29 @@
+// --- FIREBASE CONFIGURATION ---
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
 // --- STATE MANAGEMENT ---
 let user = {
     name: "Guest",
     email: "",
+    photo: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
     isLoggedIn: false
 };
 
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
-    checkLogin();
+    setupAuthObserver();
 
     // Setup FAQ Accordion
     document.querySelectorAll('.faq-question').forEach(btn => {
@@ -90,80 +105,93 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// --- AUTH FUNCTIONS ---
-function handleLogin() {
-    // Simulate API Call
-    setTimeout(() => {
-        user.isLoggedIn = true;
-        user.name = "Alex Johnson";
-        user.email = "alex.j@skillhire.ai";
-        user.photo = "https://api.dicebear.com/7.x/avataaars/svg?seed=Alex";
-
-        saveUserToLocal();
-        updateUI();
-        document.getElementById('login-screen').classList.add('hidden');
-        document.getElementById('app-container').classList.remove('hidden');
-        initCharts(); // Render graphs only after login
-        window.dispatchEvent(new Event('resize'));
-    }, 1000);
-}
-
-function handleLogout() {
-    user.isLoggedIn = false;
-    localStorage.removeItem('skillhire_user');
-    window.location.reload();
-}
-
-// Google Login Callback
-async function handleCredentialResponse(response) {
-    try {
-        // Send token to backend for verification
-        const res = await fetch('http://localhost:5000/api/auth/google', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: response.credential })
-        });
-
-        const data = await res.json();
-
-        if (data.success) {
-            console.log("Google Shared Login Success:", data.user);
-
+// Firebase Auth State Observer
+function setupAuthObserver() {
+    auth.onAuthStateChanged((firebaseUser) => {
+        if (firebaseUser) {
             user.isLoggedIn = true;
-            user.name = data.user.name;
-            user.email = data.user.email;
-            user.photo = data.user.photo;
+            user.name = firebaseUser.displayName || "User";
+            user.email = firebaseUser.email;
+            user.photo = firebaseUser.photoURL || "https://api.dicebear.com/7.x/avataaars/svg?seed=" + firebaseUser.uid;
 
-            saveUserToLocal();
             updateUI();
-
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('app-container').classList.remove('hidden');
-            initCharts();
-            window.dispatchEvent(new Event('resize'));
-            lucide.createIcons();
-        } else {
-            alert("Login failed: " + data.message);
-        }
-    } catch (error) {
-        console.error("Auth Error:", error);
-        alert("Server connection failed. Please check if the backend is running.");
-    }
-}
 
-function checkLogin() {
-    const savedUser = localStorage.getItem('skillhire_user');
-    if (savedUser) {
-        user = JSON.parse(savedUser);
-        if (user.isLoggedIn) {
-            document.getElementById('login-screen').classList.add('hidden');
-            document.getElementById('app-container').classList.remove('hidden');
-            updateUI();
             setTimeout(() => {
                 initCharts();
                 window.dispatchEvent(new Event('resize'));
-            }, 500); // Small delay for DOM to settle
+            }, 500);
+        } else {
+            user.isLoggedIn = false;
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('app-container').classList.add('hidden');
         }
+    });
+}
+
+// Guest Login (Simulated)
+function handleLogin() {
+    user.isLoggedIn = true;
+    user.name = "Guest User";
+    user.email = "guest@skillhire.ai";
+    user.photo = "https://api.dicebear.com/7.x/avataaars/svg?seed=Guest";
+
+    updateUI();
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('app-container').classList.remove('hidden');
+    initCharts();
+    window.dispatchEvent(new Event('resize'));
+}
+
+function handleLogout() {
+    auth.signOut().then(() => {
+        localStorage.removeItem('skillhire_user');
+        window.location.reload();
+    });
+}
+
+// Google Login with Firebase
+async function handleGoogleLogin() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    try {
+        await auth.signInWithPopup(provider);
+    } catch (error) {
+        console.error("Google Auth Error:", error);
+        alert(error.message);
+    }
+}
+
+// Manual Signup with Firebase
+async function handleManualSignup() {
+    const name = document.getElementById('signup-name').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+
+    if (!email || !password) return alert("Please fill all fields");
+
+    try {
+        const result = await auth.createUserWithEmailAndPassword(email, password);
+        await result.user.updateProfile({ displayName: name });
+        alert("Account created successfully!");
+    } catch (error) {
+        console.error("Signup Error:", error);
+        alert(error.message);
+    }
+}
+
+// Manual Login with Firebase
+async function handleManualLogin() {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    if (!email || !password) return alert("Please fill all fields");
+
+    try {
+        await auth.signInWithEmailAndPassword(email, password);
+    } catch (error) {
+        console.error("Login Error:", error);
+        alert(error.message);
     }
 }
 
