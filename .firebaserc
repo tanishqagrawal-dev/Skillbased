@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "skill-hire-test"
-  }
+  },
+  "targets": {
+    "skill-hire-test": {
+      "hosting": {
+        "default": [
+          "skill-hire-62fda"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

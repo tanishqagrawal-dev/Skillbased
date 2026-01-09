@@ -8,6 +8,11 @@ var db;
 try {
     if (typeof firebaseConfig !== 'undefined' && typeof firebase !== 'undefined') {
         firebase.initializeApp(firebaseConfig);
+        // Enable detailed logging
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+            .then(() => console.log("Auth Persistence set to LOCAL"))
+            .catch((error) => console.error("Auth Persistence Error:", error));
+
         auth = firebase.auth();
         db = firebase.firestore();
         console.log("Firebase initialized successfully.");
@@ -141,6 +146,13 @@ async function handleGoogleLogin() {
         await auth.signInWithPopup(provider);
     } catch (error) {
         console.error("Google Auth Error:", error);
+        if (error.code === 'auth/popup-closed-by-user') {
+            return; // Ignore
+        }
+        if (error.code === 'auth/popup-blocked') {
+            alert("Popup blocked! Please allow popups for this site.");
+            return;
+        }
         alert("Google Login Error: " + error.message);
     }
 }
