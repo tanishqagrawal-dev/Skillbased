@@ -99,6 +99,43 @@ function handleLogout() {
     window.location.reload();
 }
 
+// Google Login Callback
+async function handleCredentialResponse(response) {
+    try {
+        // Send token to backend for verification
+        const res = await fetch('http://localhost:5000/api/auth/google', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: response.credential })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            console.log("Google Shared Login Success:", data.user);
+
+            user.isLoggedIn = true;
+            user.name = data.user.name;
+            user.email = data.user.email;
+            user.photo = data.user.photo;
+
+            saveUserToLocal();
+            updateUI();
+
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('hidden');
+            initCharts();
+            window.dispatchEvent(new Event('resize'));
+            lucide.createIcons();
+        } else {
+            alert("Login failed: " + data.message);
+        }
+    } catch (error) {
+        console.error("Auth Error:", error);
+        alert("Server connection failed. Please check if the backend is running.");
+    }
+}
+
 function checkLogin() {
     const savedUser = localStorage.getItem('skillhire_user');
     if (savedUser) {
@@ -242,4 +279,3 @@ function initCharts() {
         }
     });
 }
-

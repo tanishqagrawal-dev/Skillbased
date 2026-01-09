@@ -1,0 +1,30 @@
+{
+  "name": "skillhire-premium",
+  "version": "1.0.0",
+  "description": "🔗 **Live Demo:**  \r https://tanishqagrawal-dev.github.io/skillhire-premium/",
+  "main": "script.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanishqagrawal-dev/skillhire-premium.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tanishqagrawal-dev/skillhire-premium/issues"
+  },
+  "homepage": "https://github.com/tanishqagrawal-dev/skillhire-premium#readme",
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "google-auth-library": "^10.5.0",
+    "mysql2": "^3.16.0"
+  }
+}

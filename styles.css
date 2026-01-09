@@ -808,12 +808,30 @@ th {
     }
 }
 
-#user-info {
-    text-align: center;
-    margin-top: 20px;
+/* Login Enhancement */
+.login-subtext {
+    margin: 1.5rem 0;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
 }
 
-#user-pic {
-    width: 80px;
-    border-radius: 50%;
+.login-subtext::before,
+.login-subtext::after {
+    content: "";
+    height: 1px;
+    background: var(--border);
+    flex: 1;
+}
+
+/* Ensure Google Button is centered */
+.g_id_signin {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
 }
