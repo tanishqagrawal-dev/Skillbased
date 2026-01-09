@@ -52,11 +52,59 @@ function renderTimeline(items) {
                 <h3>${item.title}</h3>
                 <p>${item.desc}</p>
                 <div class="item-tag ${item.type}">${item.type.toUpperCase()}</div>
+                
+                <div class="video-section" id="video-container-${index}">
+                    <button class="btn-secondary-sm full-width" onclick="loadTutorials(this, '${item.title} tutorial', 'video-container-${index}')">
+                        <i data-lucide="youtube"></i> Watch Tutorials
+                    </button>
+                    <div class="video-grid hidden" style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                        <!-- Videos load here -->
+                    </div>
+                </div>
             </div>
         </div>
     `).join('');
 
     lucide.createIcons();
+}
+
+async function loadTutorials(btn, query, containerId) {
+    const container = document.getElementById(containerId);
+    const grid = container.querySelector('.video-grid');
+
+    // Toggle Logic
+    if (!grid.classList.contains('hidden')) {
+        grid.classList.add('hidden');
+        btn.innerHTML = '<i data-lucide="youtube"></i> Watch Tutorials';
+        lucide.createIcons();
+        return;
+    }
+
+    // Loading State
+    btn.innerHTML = '<i data-lucide="loader-2" class="spin"></i> Loading...';
+    lucide.createIcons();
+
+    // Fetch Videos
+    const videos = await window.youTubeService.searchVideos(query);
+
+    // Render
+    if (videos.length > 0) {
+        grid.innerHTML = videos.map(v => `
+            <a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" style="text-decoration:none; color:inherit;">
+                <div class="video-card" style="background:rgba(0,0,0,0.2); border-radius:8px; overflow:hidden; transition:transform 0.2s;">
+                    <img src="${v.thumbnail}" style="width:100%; height:120px; object-fit:cover;">
+                    <div style="padding:8px;">
+                        <div style="font-size:0.85rem; font-weight:600; line-height:1.3; margin-bottom:4px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${v.title}</div>
+                        <div style="font-size:0.75rem; color:#9ca3af;">${v.channel}</div>
+                    </div>
+                </div>
+            </a>
+        `).join('');
+        grid.classList.remove('hidden');
+        btn.innerText = 'Hide Tutorials';
+    } else {
+        btn.innerText = 'No tutorials found';
+    }
 }
 
 function resetRoadmap() {

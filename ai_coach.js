@@ -1,100 +1,239 @@
-// Global AI Coach Logic
 
-const aiContexts = {
-    'dashboard': "I can help you navigate your career dashboard, track applications, or update your profile.",
-    'resume-builder': "I can review your resume content, suggest stronger action verbs, or help you maximize your ATS score.",
-    'interview-prep': "I can give you tips on body language, suggest STAR method examples, or help you prepare for specific questions.",
-    'dsa-practice': "I'm here to help with algorithms. Stuck? Ask for a hint or a complexity analysis of your approach.",
-    'roadmap': "I can explain any topic on your roadmap or suggest learning resources for specific skills.",
-    'companies': "I can provide insights on company culture, interview processes, and recent news for your target companies."
-};
+const aiChatWindow = document.getElementById('ai-chat-body');
+const aiInput = document.getElementById('ai-input');
+const aiMessages = document.getElementById('ai-messages');
 
 let isChatOpen = false;
+let chatHistory = [];
+let recognition;
+let synthesis = window.speechSynthesis;
+let isListening = false;
+let isSpeaking = false;
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Inject widget if not present (handled by HTML mostly, but good for safety)
-    const widget = document.getElementById('ai-coach-widget');
-    if (widget) {
-        updateContextMessage();
-        // Listen for tab changes
-        const observer = new MutationObserver(() => {
-            updateContextMessage();
-        });
-        observer.observe(document.querySelector('main'), { attributes: true, subtree: true });
+// Initialize
+async function initAICoach() {
+    // Inject Voice Controls into Header
+    const header = document.querySelector('#ai-chat-body .chat-header');
+    if (!header.querySelector('.chat-controls')) {
+        const controlsDiv = document.createElement('div');
+        controlsDiv.className = 'chat-controls';
+
+        // Mute/Unmute Toggle (for TTS)
+        const speakerBtn = document.createElement('button');
+        speakerBtn.className = 'chat-control-btn';
+        speakerBtn.id = 'ai-speaker-btn';
+        speakerBtn.title = "Toggle Text-to-Speech";
+        speakerBtn.onclick = toggleSpeech;
+        speakerBtn.innerHTML = '<i data-lucide="volume-2"></i>';
+
+        controlsDiv.appendChild(speakerBtn);
+
+        // Insert before close button
+        const closeBtn = header.querySelector('button[onclick="toggleChat()"]');
+        header.insertBefore(controlsDiv, closeBtn);
     }
-});
+
+    // Inject Mic Button into Input Area
+    const inputArea = document.querySelector('.chat-input-area');
+    if (!inputArea.querySelector('#ai-mic-btn')) {
+        const micBtn = document.createElement('button');
+        micBtn.id = 'ai-mic-btn';
+        micBtn.className = 'chat-control-btn';
+        micBtn.style.marginRight = "8px";
+        micBtn.innerHTML = '<i data-lucide="mic"></i>';
+        micBtn.onclick = toggleVoiceInput;
+
+        inputArea.insertBefore(micBtn, aiInput);
+    }
+
+    lucide.createIcons();
+
+    // Check availability of APIs
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        console.warn("Speech Recognition not supported");
+        document.getElementById('ai-mic-btn').style.display = 'none';
+    } else {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        recognition.onstart = () => {
+            isListening = true;
+            document.getElementById('ai-mic-btn').classList.add('listening');
+        };
+
+        recognition.onend = () => {
+            isListening = false;
+            document.getElementById('ai-mic-btn').classList.remove('listening');
+        };
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            aiInput.value = transcript;
+            sendMessage(); // Auto-send on voice end
+        };
+
+        recognition.onerror = (event) => {
+            console.error("Speech Rec Error", event.error);
+            isListening = false;
+            document.getElementById('ai-mic-btn').classList.remove('listening');
+        };
+    }
+
+    // Load History
+    if (window.firebaseService) {
+        // Wait for auth to be ready (simple check)
+        firebase.auth().onAuthStateChanged(async (user) => {
+            if (user) {
+                const savedHistory = await window.firebaseService.loadChat(user.uid);
+                if (savedHistory && savedHistory.length > 0) {
+                    chatHistory = savedHistory;
+                    // Re-render
+                    aiMessages.innerHTML = '';
+                    chatHistory.forEach(msg => {
+                        const msgDiv = document.createElement('div');
+                        msgDiv.className = `chat-message ${msg.role}`;
+                        let formattedText = msg.text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+                        formattedText = formattedText.replace(/\n/g, '<br>');
+                        msgDiv.innerHTML = formattedText;
+                        aiMessages.appendChild(msgDiv);
+                    });
+                    aiMessages.scrollTop = aiMessages.scrollHeight;
+                } else {
+                    addMessage('model', "Hello! I'm your AI Career Coach. How can I help you today?");
+                }
+            } else {
+                addMessage('model', "Hello! Please log in to save your chat history.");
+            }
+        });
+    } else {
+        if (chatHistory.length === 0) {
+            addMessage('model', "Hello! I'm your AI Career Coach. How can I help you today?");
+        }
+    }
+}
 
 function toggleChat() {
-    const chatBody = document.getElementById('ai-chat-body');
     isChatOpen = !isChatOpen;
-
+    const widget = document.getElementById('ai-coach-widget');
     if (isChatOpen) {
-        chatBody.classList.remove('hidden');
-        chatBody.classList.add('slide-up');
-        updateContextMessage();
+        aiChatWindow.classList.remove('hidden');
+        widget.classList.add('active'); // Add active class to container if needed
+        setTimeout(() => aiInput.focus(), 100);
     } else {
-        chatBody.classList.add('hidden');
-        chatBody.classList.remove('slide-up');
+        aiChatWindow.classList.add('hidden');
+        widget.classList.remove('active');
+        if (synthesis.speaking) synthesis.cancel();
     }
 }
 
-function updateContextMessage() {
-    // Find active section
-    let activeId = 'dashboard';
-    document.querySelectorAll('.view-section').forEach(sec => {
-        if (!sec.classList.contains('hidden')) {
-            activeId = sec.id;
-        }
-    });
+function toggleVoiceInput() {
+    if (!recognition) return alert("Voice input not supported in this browser.");
 
-    const contextMsg = aiContexts[activeId] || "How can I help you with your career journey today?";
-
-    // Only add if it's the last message is NOT this one
-    const msgs = document.getElementById('ai-messages');
-    if (!msgs) return;
-
-    const lastMsg = msgs.lastElementChild;
-    if (!lastMsg || lastMsg.innerText !== contextMsg) {
-        addMessage(contextMsg, 'bot');
+    if (isListening) {
+        recognition.stop();
+    } else {
+        recognition.start();
     }
 }
 
-function sendMessage() {
-    const input = document.getElementById('ai-input');
-    const text = input.value.trim();
+let ttsEnabled = true;
+function toggleSpeech() {
+    ttsEnabled = !ttsEnabled;
+    const btn = document.getElementById('ai-speaker-btn');
+    if (ttsEnabled) {
+        btn.innerHTML = '<i data-lucide="volume-2"></i>';
+        btn.classList.remove('active'); // styling choice
+    } else {
+        if (synthesis.speaking) synthesis.cancel();
+        btn.innerHTML = '<i data-lucide="volume-x"></i>';
+        btn.classList.add('active'); // indicate muted state visually if desired
+    }
+    lucide.createIcons();
+}
+
+function speak(text) {
+    if (!ttsEnabled || !synthesis) return;
+
+    // Clean text (remove markdown mostly)
+    const cleanText = text.replace(/\*\*/g, '').replace(/#/g, '').replace(/\[.*\]/g, '');
+
+    if (synthesis.speaking) synthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.volume = 1;
+    utterance.rate = 1.1; // Slightly faster
+    utterance.pitch = 1;
+
+    const voiceBtn = document.getElementById('ai-speaker-btn');
+    utterance.onstart = () => voiceBtn.classList.add('speaking');
+    utterance.onend = () => voiceBtn.classList.remove('speaking');
+
+    synthesis.speak(utterance);
+}
+
+async function sendMessage() {
+    const text = aiInput.value.trim();
     if (!text) return;
 
-    addMessage(text, 'user');
-    input.value = '';
+    if (!window.geminiService.hasApiKey()) {
+        addMessage('model', "Configuration Error: API Key missing.");
+        return;
+    }
 
-    // Simulate thinking
-    const typingId = addTypingIndicator();
+    addMessage('user', text);
+    aiInput.value = '';
 
-    setTimeout(() => {
+    const typingId = showTypingIndicator();
+
+    try {
+        const context = gatherContext();
+        const responseText = await window.geminiService.generateResponse(chatHistory, context);
+
         removeTypingIndicator(typingId);
-        // Mock response
-        addMessage(generateMockResponse(text), 'bot');
-    }, 1500);
+        addMessage('model', responseText);
+        speak(responseText);
+
+    } catch (error) {
+        removeTypingIndicator(typingId);
+        addMessage('model', `Error: ${error.message}.`);
+        console.error(error);
+    }
 }
 
-function addMessage(text, sender) {
-    const container = document.getElementById('ai-messages');
-    const div = document.createElement('div');
-    div.className = `chat-msg ${sender}`;
-    div.innerText = text;
-    container.appendChild(div);
-    container.scrollTop = container.scrollHeight;
+function addMessage(role, text) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `chat-message ${role}`;
+
+    // Simple Formatting
+    let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+    formattedText = formattedText.replace(/\n/g, '<br>');
+
+    msgDiv.innerHTML = formattedText;
+    aiMessages.appendChild(msgDiv);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+
+    chatHistory.push({ role, text });
+
+    if (window.firebaseService) {
+        const user = firebase.auth().currentUser;
+        if (user) {
+            window.firebaseService.saveChat(user.uid, chatHistory);
+        }
+    }
 }
 
-function addTypingIndicator() {
-    const container = document.getElementById('ai-messages');
-    const div = document.createElement('div');
-    div.id = 'typing-' + Date.now();
-    div.className = 'chat-msg bot typing';
-    div.innerHTML = '<span>.</span><span>.</span><span>.</span>';
-    container.appendChild(div);
-    container.scrollTop = container.scrollHeight;
-    return div.id;
+function showTypingIndicator() {
+    const id = 'typing-' + Date.now();
+    const msgDiv = document.createElement('div');
+    msgDiv.id = id;
+    msgDiv.className = `chat-message model typing`;
+    msgDiv.innerHTML = '<span></span><span></span>'; // CSS handles 2 dots
+    aiMessages.appendChild(msgDiv);
+    aiMessages.scrollTop = aiMessages.scrollHeight;
+    return id;
 }
 
 function removeTypingIndicator(id) {
@@ -102,18 +241,29 @@ function removeTypingIndicator(id) {
     if (el) el.remove();
 }
 
-function generateMockResponse(query) {
-    query = query.toLowerCase();
-    if (query.includes('hello') || query.includes('hi')) return "Hello! Ready to accelerate your career?";
-    if (query.includes('resume')) return "For your resume, focus on quantifiable results. Did you increase efficiency or revenue?";
-    if (query.includes('interview')) return "Remember the STAR method: Situation, Task, Action, Result. Crucial for behavioral questions.";
-    if (query.includes('python')) return "Python is great for DSA. Remember to master list comprehensions and dictionaries.";
-    return "That's a great question. As an AI Coach, I suggest breaking this down into smaller steps. Shall we create a learning task for it?";
+function gatherContext() {
+    let context = {
+        currentPage: 'Dashboard',
+        activeData: {}
+    };
+
+    const views = document.querySelectorAll('.view-section');
+    views.forEach(view => {
+        if (!view.classList.contains('hidden')) {
+            context.currentPage = view.id;
+        }
+    });
+
+    if (context.currentPage === 'dsa-practice') {
+        const problemTitle = document.querySelector('.problem-header h2')?.innerText;
+        const userCode = document.querySelector('.code-editor textarea')?.value || "";
+        context.activeData = { problem: problemTitle, currentCode: userCode };
+    } else if (context.currentPage === 'resume-builder') {
+        const summary = document.getElementById('summary')?.value;
+        context.activeData = { resumeSummary: summary };
+    }
+
+    return context;
 }
 
-// Allow Enter key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && document.getElementById('ai-input') === document.activeElement) {
-        sendMessage();
-    }
-});
+document.addEventListener('DOMContentLoaded', initAICoach);

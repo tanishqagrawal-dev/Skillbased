@@ -7,27 +7,128 @@ let resumeData = {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    addExperience();
-    addEducation();
+    // Try to load from Firebase
+    if (window.firebaseService) {
+        // Wait briefly for auth
+        const checkAuth = setInterval(() => {
+            if (typeof firebase !== 'undefined' && firebase.auth()) {
+                clearInterval(checkAuth);
+                firebase.auth().onAuthStateChanged(async (user) => {
+                    if (user) {
+                        const draft = await window.firebaseService.loadResumeDraft(user.uid);
+                        if (draft) {
+                            loadResumeFromDraft(draft);
+                        } else {
+                            // Default init
+                            addExperience();
+                            addEducation();
+                        }
+                    } else {
+                        addExperience();
+                        addEducation();
+                    }
+                });
+            }
+        }, 500);
+
+        // Timeout to safe default
+        setTimeout(() => {
+            if (resumeData.experiences.length === 0) {
+                addExperience();
+                addEducation();
+            }
+        }, 3000);
+    } else {
+        addExperience();
+        addEducation();
+    }
 });
 
-function toggleAccordion(header) {
-    const item = header.parentElement;
-    // Close others
-    document.querySelectorAll('.accordion-item').forEach(el => {
-        if (el !== item) el.classList.remove('active');
-    });
-    item.classList.toggle('active');
+function loadResumeFromDraft(draft) {
+    if (!draft) return;
+
+    // Fill BasicFields
+    if (draft.basic) {
+        document.getElementById('res-name').value = draft.basic.name || '';
+        document.getElementById('res-role').value = draft.basic.role || '';
+        document.getElementById('res-email').value = draft.basic.email || '';
+        document.getElementById('res-phone').value = draft.basic.phone || '';
+        document.getElementById('res-summary').value = draft.basic.summary || '';
+        document.getElementById('res-skills').value = draft.basic.skills || '';
+    }
+
+    // Fill Lists
+    if (draft.experiences) {
+        resumeData.experiences = draft.experiences;
+        const container = document.getElementById('experience-list');
+        container.innerHTML = ''; // Clear defaults
+        resumeData.experiences.forEach(exp => {
+            const div = document.createElement('div');
+            div.className = 'exp-item form-grid';
+            div.dataset.id = exp.id;
+            div.innerHTML = `
+                <div class="form-group">
+                    <input type="text" placeholder="Job Title" value="${exp.role}" oninput="updateExp(${exp.id}, 'role', this.value)">
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Company" value="${exp.company}" oninput="updateExp(${exp.id}, 'company', this.value)">
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Date" value="${exp.date}" oninput="updateExp(${exp.id}, 'date', this.value)">
+                </div>
+                <div class="form-group full">
+                    <textarea placeholder="Description" rows="2" oninput="updateExp(${exp.id}, 'desc', this.value)">${exp.desc}</textarea>
+                </div>
+                <button class="btn-link-danger" onclick="removeExp(${exp.id})">Remove</button>
+                <hr style="grid-column: 1/-1; border-color: rgba(255,255,255,0.1);">
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    if (draft.education) {
+        resumeData.education = draft.education;
+        const container = document.getElementById('education-list');
+        container.innerHTML = '';
+        resumeData.education.forEach(edu => {
+            const div = document.createElement('div');
+            div.className = 'edu-item form-grid';
+            div.dataset.id = edu.id;
+            div.innerHTML = `
+                 <div class="form-group">
+                    <input type="text" placeholder="School" value="${edu.school}" oninput="updateEdu(${edu.id}, 'school', this.value)">
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Degree" value="${edu.degree}" oninput="updateEdu(${edu.id}, 'degree', this.value)">
+                </div>
+                <div class="form-group full">
+                    <input type="text" placeholder="Year" value="${edu.date}" oninput="updateEdu(${edu.id}, 'date', this.value)">
+                </div>
+                 <button class="btn-link-danger" onclick="removeEdu(${edu.id})">Remove</button>
+                 <hr style="grid-column: 1/-1; border-color: rgba(255,255,255,0.1);">
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    updateResume(false); // Update preview without saving again
 }
 
-function updateResume() {
+function updateResume(shouldSave = true) {
     // Basic Fields
-    document.getElementById('prev-name').innerText = document.getElementById('res-name').value || 'Your Name';
-    document.getElementById('prev-role').innerText = document.getElementById('res-role').value || 'Target Role';
-    document.getElementById('prev-email').innerText = document.getElementById('res-email').value || 'email@example.com';
-    document.getElementById('prev-phone').innerText = document.getElementById('res-phone').value || '+1 234 567 890';
-    document.getElementById('prev-summary').innerText = document.getElementById('res-summary').value || 'Your professional summary will appear here...';
-    document.getElementById('prev-skills').innerText = document.getElementById('res-skills').value || 'List your top skills...';
+    const name = document.getElementById('res-name').value;
+    const role = document.getElementById('res-role').value;
+    const email = document.getElementById('res-email').value;
+    const phone = document.getElementById('res-phone').value;
+    const summary = document.getElementById('res-summary').value;
+    const skills = document.getElementById('res-skills').value;
+
+    document.getElementById('prev-name').innerText = name || 'Your Name';
+    document.getElementById('prev-role').innerText = role || 'Target Role';
+    document.getElementById('prev-email').innerText = email || 'email@example.com';
+    document.getElementById('prev-phone').innerText = phone || '+1 234 567 890';
+    document.getElementById('prev-summary').innerText = summary || 'Your professional summary will appear here...';
+    document.getElementById('prev-skills').innerText = skills || 'List your top skills...';
 
     // Lists
     renderExperience();
@@ -35,6 +136,19 @@ function updateResume() {
 
     // ATS Check
     calculateATS();
+
+    // Save to Cloud
+    if (shouldSave && window.firebaseService) {
+        const user = firebase.auth().currentUser;
+        if (user) {
+            const draft = {
+                basic: { name, role, email, phone, summary, skills },
+                experiences: resumeData.experiences,
+                education: resumeData.education
+            };
+            window.firebaseService.saveResumeDraft(user.uid, draft);
+        }
+    }
 }
 
 function addExperience() {
