@@ -1,11 +1,15 @@
 {
     "hosting": {
         "site": "skill-hire-62fda",
-        "public": "public",
+        "public": ".",
         "ignore": [
             "firebase.json",
+            "package.json",
+            "package-lock.json",
+            "node_modules/**",
             "**/.*",
-            "**/node_modules/**"
+            ".agent/**",
+            "README.md"
         ],
         "rewrites": [
             {
