@@ -1,11 +1,12 @@
 // --- FIREBASE CONFIGURATION ---
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyCisPmVF44PanIfYDiGZgCf3AICTn8l8aM",
+    authDomain: "skill-hire-test.firebaseapp.com",
+    projectId: "skill-hire-test",
+    storageBucket: "skill-hire-test.firebasestorage.app",
+    messagingSenderId: "217750622906",
+    appId: "1:217750622906:web:5426dbebfd8ea47f0ee883",
+    measurementId: "G-5YGX4KTSL9"
 };
 
 // Initialize Firebase

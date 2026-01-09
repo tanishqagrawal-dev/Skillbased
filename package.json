@@ -4,7 +4,8 @@
   "description": "🔗 **Live Demo:**  \r https://tanishqagrawal-dev.github.io/skillhire-premium/",
   "main": "script.js",
   "scripts": {
-    "start": "node server.js",
+    "serve": "firebase serve --only hosting",
+    "deploy": "firebase deploy --only hosting:skill-hire-62fda",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,13 +20,7 @@
     "url": "https://github.com/tanishqagrawal-dev/skillhire-premium/issues"
   },
   "homepage": "https://github.com/tanishqagrawal-dev/skillhire-premium#readme",
-  "dependencies": {
-    "bcryptjs": "^3.0.3",
-    "body-parser": "^2.2.2",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^5.2.1",
-    "google-auth-library": "^10.5.0",
-    "mysql2": "^3.16.0"
+  "devDependencies": {
+    "firebase-tools": "^15.2.1"
   }
 }
