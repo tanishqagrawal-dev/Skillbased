@@ -511,76 +511,77 @@ function initCharts() {
 // --- MARKET INTELLIGENCE (Gemini Powered) ---
 const testMarketData = [
     {
-        "company": "Google",
-        "role": "Frontend Engineer",
-        "cutoff": 92,
-        "status": "Upskill",
-        "logo_url": "https://logo.clearbit.com/google.com"
+        company: "Google",
+        role: "Frontend Engineer",
+        cutoff: 92,
+        status: "Upskill",
+        logo_url: "https://tse1.mm.bing.net/th/id/OIP.WZEsF8Yzchv1bEJgr7AiZAHaHa?pid=Api&P=0&h=180"
     },
     {
-        "company": "Amazon",
-        "role": "SDE-1",
-        "cutoff": 84,
-        "status": "Eligible",
-        "logo_url": "https://logo.clearbit.com/amazon.com"
+        company: "Amazon",
+        role: "SDE-1",
+        cutoff: 84,
+        status: "Eligible",
+        logo_url: "https://tse3.mm.bing.net/th/id/OIP.YKFZjzosPzcUtBNHe9cAdAHaEK?pid=Api&P=0&h=180"
     },
     {
-        "company": "Netflix",
-        "role": "Sr. UI Eng",
-        "cutoff": 95,
-        "status": "Not Ready",
-        "logo_url": "https://logo.clearbit.com/netflix.com"
+        company: "Netflix",
+        role: "Sr. UI Eng",
+        cutoff: 95,
+        status: "Not Ready",
+        logo_url: "https://tse1.mm.bing.net/th/id/OIP.CnlidGvyCZgGnztLkfgwUAHaHa?pid=Api&P=0&h=180"
     },
     {
-        "company": "Microsoft",
-        "role": "Software Engineer",
-        "cutoff": 89,
-        "status": "Eligible",
-        "logo_url": "https://logo.clearbit.com/microsoft.com"
+        company: "Microsoft",
+        role: "Software Engineer",
+        cutoff: 89,
+        status: "Eligible",
+        logo_url: "https://tse1.mm.bing.net/th/id/OIP.AKyCP44z4UUp2gqH8BTf3QHaGB?pid=Api&P=0&h=180"
     },
     {
-        "company": "Apple",
-        "role": "IOS Engineer",
-        "cutoff": 85,
-        "status": "Upskill",
-        "logo_url": "https://logo.clearbit.com/apple.com"
+        company: "Apple",
+        role: "iOS Engineer",
+        cutoff: 85,
+        status: "Upskill",
+        logo_url: "https://tse1.mm.bing.net/th/id/OIP.3qsMnUTHk9Zs8dA5meZsSwHaEK?pid=Api&P=0&h=180"
     },
     {
-        "company": "Facebook",
-        "role": "Product Engineer",
-        "cutoff": 90,
-        "status": "Eligible",
-        "logo_url": "https://logo.clearbit.com/facebook.com"
+        company: "Meta",
+        role: "Product Engineer",
+        cutoff: 90,
+        status: "Eligible",
+        logo_url: "https://tse1.mm.bing.net/th/id/OIP.VgfWevmVdjRKHG8bfhpVsgHaHa?pid=Api&P=0&h=180"
     },
     {
-        "company": "Adobe",
-        "role": "UI/UX Developer",
-        "cutoff": 83,
-        "status": "Upskill",
-        "logo_url": "https://logo.clearbit.com/adobe.com"
+        company: "Adobe",
+        role: "UI/UX Developer",
+        cutoff: 83,
+        status: "Upskill",
+        logo_url: "https://tse3.mm.bing.net/th/id/OIP.y8OX_qav2XCIW8jNeaqXBwHaCB?pid=Api&P=0&h=180"
     },
     {
-        "company": "Salesforce",
-        "role": "CRM Developer",
-        "cutoff": 88,
-        "status": "Eligible",
-        "logo_url": "https://logo.clearbit.com/salesforce.com"
+        company: "Salesforce",
+        role: "CRM Developer",
+        cutoff: 88,
+        status: "Eligible",
+        logo_url: "https://tse3.mm.bing.net/th/id/OIP.vJzP4ngqOD78iyOyJZn4XQHaFL?pid=Api&P=0&h=180"
     },
     {
-        "company": "Oracle",
-        "role": "Backend Engineer",
-        "cutoff": 80,
-        "status": "Upskill",
-        "logo_url": "https://logo.clearbit.com/oracle.com"
+        company: "Oracle",
+        role: "Backend Engineer",
+        cutoff: 80,
+        status: "Upskill",
+        logo_url: "https://tse3.mm.bing.net/th/id/OIP.jdQ0-zCqys8HUsVr1-EE6AHaEK?pid=Api&P=0&h=180"
     },
     {
-        "company": "IBM",
-        "role": "Cloud Developer",
-        "cutoff": 87,
-        "status": "Eligible",
-        "logo_url": "https://logo.clearbit.com/ibm.com"
+        company: "IBM",
+        role: "Cloud Developer",
+        cutoff: 87,
+        status: "Eligible",
+        logo_url: "https://tse3.mm.bing.net/th/id/OIP.XIZDhSibILo3WFUdQjLM-wHaE8?pid=Api&P=0&h=180"
     }
 ];
+
 
 function initMarketData() {
     const tbody = document.getElementById('market-data-body');
