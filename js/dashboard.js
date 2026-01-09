@@ -216,12 +216,12 @@ function handleLogout() {
         auth.signOut().then(() => {
             localStorage.removeItem('skillhire_user');
             localStorage.removeItem('skillhire_guest');
-            window.location.href = 'index.html';
+            window.location.href = '../index.html';
         });
     } else {
         localStorage.removeItem('skillhire_user');
         localStorage.removeItem('skillhire_guest');
-        window.location.href = 'index.html';
+        window.location.href = '../index.html';
     }
 }
 
@@ -285,7 +285,7 @@ function setupAuthObserver() {
             }, 500);
         } else {
             console.log("No authenticated user or guest flag, redirecting to landing page...");
-            window.location.href = 'index.html';
+            window.location.href = '../index.html';
         }
     });
 }

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (user) {
                 console.log("User detected, redirecting to dashboard...");
                 // Redirect logged-in users to the dashboard
-                window.location.href = 'dashboard.html';
+                window.location.href = 'pages/dashboard.html';
             } else {
                 console.log("No user logged in. Landing page ready.");
             }
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Redirect to Auth Page
     window.startLogin = () => {
-        window.location.href = 'auth.html';
+        window.location.href = 'pages/auth.html';
     };
 
     // Simple Scroll Animations

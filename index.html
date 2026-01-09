@@ -20,8 +20,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
     <!-- App Config & Styles -->
-    <script src="config.js"></script>
-    <link rel="stylesheet" href="landing page/landing.css">
+    <script src="js/config.js"></script>
+    <link rel="stylesheet" href="css/landing.css">
 </head>
 
 <body>
@@ -39,7 +39,7 @@
                 <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">
                     <i data-lucide="sun"></i>
                 </button>
-                <a href="auth.html" class="btn btn-outline" style="text-decoration: none;">Log In</a>
+                <a href="pages/auth.html" class="btn btn-outline" style="text-decoration: none;">Log In</a>
             </div>
         </div>
     </nav>
@@ -58,14 +58,14 @@
                     gaps with Google Gemini 2.0.
                 </p>
                 <div class="hero-ctas">
-                    <a href="auth.html" class="btn btn-primary" style="text-decoration: none;">
+                    <a href="pages/auth.html" class="btn btn-primary" style="text-decoration: none;">
                         Get Started Free <i data-lucide="arrow-right"></i>
                     </a>
                     <!-- <button class="btn btn-secondary">Watch Demo</button> -->
                 </div>
             </div>
             <div class="hero-visual">
-                <img src="landing page/hero-preview.png" alt="Dashboard Preview">
+                <img src="assets/hero-preview.png" alt="Dashboard Preview">
             </div>
         </div>
     </header>
@@ -106,12 +106,12 @@
                         actionable feedback in seconds.</p>
                 </div>
                 <div class="feature-visual">
-                    <img src="landing page/hero-preview.png" alt="Resume Analysis">
+                    <img src="assets/hero-preview.png" alt="Resume Analysis">
                 </div>
             </div>
             <div class="feature-item reverse">
                 <div class="feature-visual">
-                    <img src="landing page/interview-feature.png" alt="Interview Practice">
+                    <img src="assets/interview-feature.png" alt="Interview Practice">
                 </div>
                 <div class="feature-content">
                     <h3>Simulated Mock Interviews</h3>
@@ -126,7 +126,7 @@
                         for your dream job.</p>
                 </div>
                 <div class="feature-visual">
-                    <img src="landing page/roadmap-feature.png" alt="Learning Roadmap">
+                    <img src="assets/roadmap-feature.png" alt="Learning Roadmap">
                 </div>
             </div>
 
@@ -218,19 +218,19 @@
                 <h3>Free Starter</h3>
                 <div class="price">₹0 <span>/mo</span></div>
                 <p>Basic resume scoring and 1 mock interview session.</p>
-                <button class="btn btn-secondary full-width" onclick="location.href='auth.html'">Choose Free</button>
+                <button class="btn btn-secondary full-width" onclick="location.href='pages/auth.html'">Choose Free</button>
             </div>
             <div class="card price-card featured">
                 <h3>Premium Student</h3>
                 <div class="price">₹199 <span>/mo</span></div>
                 <p>Unlimited analysis, deep interview coaching, and roadmap tracking.</p>
-                <button class="btn btn-primary full-width" onclick="location.href='auth.html'">Go Premium</button>
+                <button class="btn btn-primary full-width" onclick="location.href='pages/auth.html'">Go Premium</button>
             </div>
             <div class="card price-card">
                 <h3>Pro Intensive</h3>
                 <div class="price">₹499 <span>/mo</span></div>
                 <p>Everything in Premium + AI Career Coach and Resume Review.</p>
-                <button class="btn btn-secondary full-width" onclick="location.href='auth.html'">Join Pro</button>
+                <button class="btn btn-secondary full-width" onclick="location.href='pages/auth.html'">Join Pro</button>
             </div>
         </div>
     </section>
@@ -241,7 +241,7 @@
     </footer>
 
     <!-- App Script -->
-    <script src="landing page/landing.js"></script>
+    <script src="js/landing.js"></script>
     <script>lucide.createIcons();</script>
 </body>
 
