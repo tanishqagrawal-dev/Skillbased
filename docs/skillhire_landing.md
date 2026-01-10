@@ -1,4 +1,4 @@
-# SkillHire Premium – Modern Landing Page Design & Content
+# Skil Matrix Premium – Modern Landing Page Design & Content
 
 ## 🎯 Landing Page Architecture (Recommended Structure)
 
@@ -113,7 +113,7 @@ Headline: "From Confused to Confident in 3 Steps"
 
 STEP 1: Upload & Analyze (5 minutes)
 Upload your resume + add target job description
-→ SkillHire AI instantly analyzes gaps
+→ Skil Matrix AI instantly analyzes gaps
 Visual: Phone mockup showing upload screen
 
 STEP 2: Practice & Improve (20-30 minutes)
@@ -198,11 +198,11 @@ Design Style:
 **Design: Clear competitive positioning**
 
 ```
-Headline: "How SkillHire Compares"
+Headline: "How Skil Matrix Compares"
 
 Comparison vs Competitors:
 
-| Feature | SkillHire | Rezi | Jobscan | Interview Sidekick | iMocha |
+| Feature | Skil Matrix | Rezi | Jobscan | Interview Sidekick | iMocha |
 |---------|-----------|------|---------|-------------------|---------|
 | Resume Analysis | ✓ | ✓ | ✓ | ✗ | ✗ |
 | Interview Practice | ✓ | ✗ | ✗ | ✓ | ✗ |
@@ -214,7 +214,7 @@ Comparison vs Competitors:
 
 Design Notes:
 - Use checkmarks and X marks for clear visual scanning
-- Highlight SkillHire row with subtle background color
+- Highlight Skil Matrix row with subtle background color
 - Note: "Best for students combining resume + interview prep"
 ```
 
@@ -236,7 +236,7 @@ Student Testimonials (3-4 cards):
 
 Testimonial 1:
 "I was applying for 50+ jobs monthly with 0 interviews.
-SkillHire's resume analysis showed I was missing 15 key keywords.
+Skil Matrix's resume analysis showed I was missing 15 key keywords.
 After fixing them, I got 3 interviews in the same week!"
 - Priya Sharma, 2nd Year CSE, BITS Pilani
 - Avatar + Role + Location
@@ -358,7 +358,7 @@ and is 94% accurate based on actual hiring outcomes. Results vary by role.
 Q3: Can I cancel anytime?
 A: Yes. Cancel with one click, anytime. No lock-in period, no questions asked.
 
-Q4: What job roles does SkillHire support?
+Q4: What job roles does Skil Matrix support?
 A: We support 500+ job roles across tech, finance, consulting, marketing, sales,
 and more. Adding new roles weekly based on student demand.
 
@@ -413,7 +413,7 @@ Column 5: Social
 - Discord (Student community)
 
 Bottom Bar:
-Copyright © 2024 SkillHire
+Copyright © 2024 Skil Matrix
 Made with ❤️ for students | Funded by [Investors if applicable]
 
 Design Notes:

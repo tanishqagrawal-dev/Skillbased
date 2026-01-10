@@ -59,7 +59,7 @@ function toggleTheme() {
     const newTheme = isLight ? 'dark' : 'light';
 
     document.body.dataset.theme = newTheme;
-    localStorage.setItem('skillhire_theme', newTheme);
+    localStorage.setItem('skilmatrix_theme', newTheme);
     updateThemeIcon();
 }
 
@@ -75,7 +75,7 @@ function updateThemeIcon() {
 }
 
 // Initialize Theme on Load (Outside DOMContentLoaded to avoid FOUC if possible, but JS file usually loads late)
-const savedTheme = localStorage.getItem('skillhire_theme') || 'dark';
+const savedTheme = localStorage.getItem('skilmatrix_theme') || 'dark';
 document.body.dataset.theme = savedTheme;
 updateThemeIcon();
 

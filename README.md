@@ -1,4 +1,4 @@
-# 🚀 SkillHire Premium – AI-Powered Skill Gap & Hiring Intelligence Platform
+# 🚀 Skil Matrix Premium – AI-Powered Skill Gap & Hiring Intelligence Platform
 
 🔗 **Live Demo:**  
 https://tanishqagrawal-dev.github.io/skillhire-premium/
@@ -7,7 +7,7 @@ https://tanishqagrawal-dev.github.io/skillhire-premium/
 
 ## 📌 Project Overview
 
-**SkillHire Premium** is a modern, AI-inspired career intelligence web platform designed to help students and job seekers understand their **resume strength, skill gaps, and job readiness** in a structured and visual way.
+**Skil Matrix Premium** is a modern, AI-inspired career intelligence web platform designed to help students and job seekers understand their **resume strength, skill gaps, and job readiness** in a structured and visual way.
 
 The project simulates how real-world **ATS (Applicant Tracking System)** tools, hiring dashboards, and skill-based platforms work, giving users a clear idea of where they stand and what to improve to become job-ready.
 
@@ -23,7 +23,7 @@ Many students:
 - Don’t get structured guidance on how to improve  
 - Lack a single platform combining resume analysis, job insights, and learning paths  
 
-**SkillHire Premium solves this by combining all these into one unified dashboard.**
+**Skil Matrix Premium solves this by combining all these into one unified dashboard.**
 
 ---
 
@@ -78,11 +78,11 @@ Many students:
 
 | Category | Technology |
 |--------|-----------|
-| Frontend | React.js |
-| Styling | CSS / Tailwind-style UI |
-| Components | Modular React Components |
-| Hosting | GitHub Pages |
-| Build Tool | Vite / React Scripts |
+| Frontend | HTML, CSS, JavaScript (Vanilla) |
+| Styling | CSS3 Variables, Glassmorphism |
+| Components | Modular HTML Structure |
+| Hosting | Firebase / GitHub Pages |
+| Build Tool | None (Static) |
 
 > ⚠️ Note:  
 > This is a **frontend-focused project**. AI logic and backend APIs are represented through UI simulation for demonstration purposes.
@@ -91,7 +91,7 @@ Many students:
 
 ## 📁 Project Structure
 
-skillhire-premium/
+skil-matrix-premium/
 ├── public/
 ├── src/
 │ ├── components/
