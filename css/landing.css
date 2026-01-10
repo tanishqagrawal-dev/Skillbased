@@ -314,48 +314,63 @@ th {
 }
 
 /* Light Theme Variables */
+/* Modern Futuristic Light Theme */
 [data-theme="light"] {
-    --primary: #0D9488;
-    /* Darker Teal */
-    --primary-glow: rgba(13, 148, 136, 0.2);
-    --secondary: #6D28D9;
-    --secondary-glow: rgba(109, 40, 217, 0.2);
-    --dark-bg: #F8FAFC;
-    /* Light Slate Background */
-    --card-bg: rgba(255, 255, 255, 0.7);
+    --primary: #0F766E;
+    /* Deep Teal for text/borders */
+    --primary-glow: rgba(45, 212, 191, 0.4);
+    /* Vibrant Cyan Glow */
+    --secondary: #7C3AED;
+    --secondary-glow: rgba(139, 92, 246, 0.4);
+    /* Vibrant Purple Glow */
+    --dark-bg: #F0F9FF;
+    /* Very light cool blue tint */
+    --card-bg: rgba(255, 255, 255, 0.65);
+    /* Glassy */
     --text-main: #0F172A;
     /* Slate 900 */
     --text-muted: #475569;
     /* Slate 600 */
-    --border: rgba(0, 0, 0, 0.1);
-    --glass: rgba(255, 255, 255, 0.5);
+    --border: rgba(148, 163, 184, 0.2);
+    --glass: rgba(255, 255, 255, 0.8);
     background-color: #F8FAFC;
     color: #0F172A;
 }
 
 body[data-theme="light"] {
-    background-color: #F8FAFC;
+    background: radial-gradient(circle at top center, #F8FAFC 0%, #EFF6FF 100%);
+    background-attachment: fixed;
 }
 
-[data-theme="light"] .bg-glow,
+[data-theme="light"] .bg-glow {
+    background: radial-gradient(circle, var(--primary-glow) 0%, transparent 60%);
+    opacity: 1;
+    filter: blur(90px);
+}
+
 [data-theme="light"] .bg-glow-2 {
-    opacity: 0.6;
+    background: radial-gradient(circle, var(--secondary-glow) 0%, transparent 60%);
+    opacity: 0.8;
+    filter: blur(90px);
 }
 
 [data-theme="light"] .navbar {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.7);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(20px);
 }
 
 [data-theme="light"] .card,
 [data-theme="light"] .comparison-container {
-    background: #ffffff;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    border-color: rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05),
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="light"] .hero-headline {
-    background: linear-gradient(to right, #0F172A, #334155);
+    background: linear-gradient(135deg, #0F172A 0%, #334155 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;

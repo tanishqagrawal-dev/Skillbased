@@ -338,3 +338,37 @@
         opacity: 1;
     }
 }
+
+/* Light Mode Support */
+[data-theme="light"] .ai-chat-window {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(8, 145, 178, 0.2);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1), 0 0 30px rgba(8, 145, 178, 0.1);
+}
+
+[data-theme="light"] .chat-header {
+    background: linear-gradient(90deg, rgba(8, 145, 178, 0.1), rgba(124, 58, 237, 0.1));
+    border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .chat-msg.bot {
+    background: rgba(255, 255, 255, 0.9);
+    color: #1e293b;
+    border-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .chat-msg.bot::before {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .chat-input-area {
+    background: rgba(255, 255, 255, 0.7);
+    border-top-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .chat-input-area input {
+    background: rgba(255, 255, 255, 0.8);
+    color: #1e293b;
+    border-color: rgba(0, 0, 0, 0.1);
+}

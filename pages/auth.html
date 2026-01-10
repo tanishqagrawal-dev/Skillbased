@@ -313,6 +313,121 @@
             opacity: 0.5;
             z-index: 10;
         }
+
+        /* Auth Theme Toggle */
+        .auth-theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            color: #fff;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+        }
+
+        .auth-theme-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Light Mode Styles */
+        body[data-theme="light"] {
+            background-color: #F0F9FF;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(8, 145, 178, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.1) 0px, transparent 50%);
+        }
+
+        [data-theme="light"] .glass-card {
+            background: rgba(255, 255, 255, 0.65);
+            border-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05),
+                inset 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        [data-theme="light"] .header h2 {
+            background: linear-gradient(to right, #0F172A, #334155);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        [data-theme="light"] .header p {
+            color: #475569;
+        }
+
+        [data-theme="light"] .form-group label {
+            color: #334155;
+        }
+
+        [data-theme="light"] input {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(148, 163, 184, 0.3);
+            color: #0F172A;
+        }
+
+        [data-theme="light"] input:focus {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: #0891b2;
+            box-shadow: 0 0 15px rgba(8, 145, 178, 0.15);
+        }
+
+        [data-theme="light"] .input-box i {
+            color: #64748B;
+        }
+
+        [data-theme="light"] input:focus+i {
+            color: #0891b2;
+        }
+
+        [data-theme="light"] .btn-secondary {
+            background: rgba(255, 255, 255, 0.5);
+            border-color: rgba(148, 163, 184, 0.3);
+            color: #334155;
+        }
+
+        [data-theme="light"] .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.8);
+            color: #0F172A;
+            transform: translateZ(25px);
+        }
+
+        [data-theme="light"] .back-link {
+            color: #475569;
+        }
+
+        [data-theme="light"] .back-link:hover {
+            color: #0F172A;
+        }
+
+        [data-theme="light"] .auth-theme-toggle {
+            background: rgba(255, 255, 255, 0.5);
+            border-color: rgba(148, 163, 184, 0.3);
+            color: #0F172A;
+        }
+
+        [data-theme="light"] .stars {
+            opacity: 0.05;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, #000, rgba(0, 0, 0, 0)),
+                radial-gradient(2px 2px at 40px 70px, #333, rgba(0, 0, 0, 0)),
+                radial-gradient(2px 2px at 50px 160px, #000, rgba(0, 0, 0, 0)),
+                radial-gradient(2px 2px at 90px 40px, #333, rgba(0, 0, 0, 0));
+        }
+
+        [data-theme="light"] .logo {
+            color: #0891b2;
+            text-shadow: none;
+        }
     </style>
 </head>
 
@@ -378,6 +493,10 @@
         </div>
     </div>
 
+    <div class="auth-theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+        <i data-lucide="sun"></i>
+    </div>
+
     <script>
         lucide.createIcons();
 
@@ -436,6 +555,32 @@
         function handleCreateAccount() {
             window.location.href = 'signup.html';
         }
+
+        // --- THEME LOGIC ---
+        function toggleTheme() {
+            const isLight = document.body.dataset.theme === 'light';
+            const newTheme = isLight ? 'dark' : 'light';
+
+            document.body.dataset.theme = newTheme;
+            localStorage.setItem('skillhire_theme', newTheme);
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const isLight = document.body.dataset.theme === 'light';
+            const btn = document.querySelector('.auth-theme-toggle');
+            if (btn) {
+                const icon = isLight ? 'moon' : 'sun';
+                btn.innerHTML = `<i data-lucide="${icon}"></i>`;
+                lucide.createIcons();
+            }
+        }
+
+        // Initialize Theme
+        const savedTheme = localStorage.getItem('skillhire_theme') || 'dark';
+        document.body.dataset.theme = savedTheme;
+        // Delay slightly to ensure icons are loaded if script runs fast
+        setTimeout(updateThemeIcon, 50);
     </script>
 </body>
 
