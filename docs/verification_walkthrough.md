@@ -1,6 +1,6 @@
-# SkillHire Premium - Verification Walkthrough
+# Skil Matrix Premium - Verification Walkthrough
 
-This document outlines the steps to verify the functionality of the newly implemented SkillHire Premium modules.
+This document outlines the steps to verify the functionality of the newly implemented Skil Matrix Premium modules.
 
 ## 1. Resume Builder & ATS Checker
 **Objective**: Verify that a user can create a resume and get an ATS score.

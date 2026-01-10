@@ -23,7 +23,7 @@ class GeminiService {
             parts: [{
                 text: `
                 SYSTEM INSTRUCTIONS:
-                You are SkillHire's AI Career Coach. 
+                You are Skil Matrix's AI Career Coach. 
                 
                 Current Context:
                 ${JSON.stringify(context)}

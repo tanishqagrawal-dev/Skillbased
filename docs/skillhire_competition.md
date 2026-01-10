@@ -1,4 +1,4 @@
-# SkillHire Premium – Competitive Analysis & Market Positioning
+# Skil Matrix Premium – Competitive Analysis & Market Positioning
 
 ## 📊 Comprehensive Competitor Comparison
 
@@ -15,13 +15,13 @@
 | **Yoodli** | Communication Coach | Professionals | $19/mo | Delivery, pacing, communication skills |
 | **StudentAI.app** | Career Guidance | Students | Free - Custom | Skill gap + learning recommendations |
 | **PathFinder** | Career Development | Professionals | Free (EU) | AI CV analysis, course recommendations |
-| **SkillHire Premium** | **Job Readiness** | **Students** | **Freemium** | **All-in-one: Resume + Interview + Skills** |
+| **Skil Matrix Premium** | **Job Readiness** | **Students** | **Freemium** | **All-in-one: Resume + Interview + Skills** |
 
 ---
 
 ## 🎯 Detailed Head-to-Head Comparisons
 
-### 1. SkillHire vs Rezi.ai
+### 1. Skil Matrix vs Rezi.ai
 
 **Rezi Strengths:**
 - Mature AI content generation (trained on 50,000+ resumes)
@@ -37,18 +37,18 @@
 - Expensive ($16.99/mo minimum)
 - Not student-focused
 
-**SkillHire Advantage:**
+**Skil Matrix Advantage:**
 - 3-in-1: Resume + Interview + Skill Gaps
 - Interview failure analysis (unique)
 - Student-friendly pricing (₹199/month)
 - Company-specific interview prep
 - Learning path recommendations
 
-**Verdict:** Rezi is better for full-time job seekers optimizing resumes. SkillHire is better for students needing complete preparation.
+**Verdict:** Rezi is better for full-time job seekers optimizing resumes. Skil Matrix is better for students needing complete preparation.
 
 ---
 
-### 2. SkillHire vs Jobscan
+### 2. Skil Matrix vs Jobscan
 
 **Jobscan Strengths:**
 - Simple, focused tool (does one thing well)
@@ -64,18 +64,18 @@
 - Limited to scanning, not optimization
 - Not student-focused
 
-**SkillHire Advantage:**
+**Skil Matrix Advantage:**
 - Interview preparation included
 - Learning recommendations for gaps
 - Progress tracking (resume score over time)
 - Soft skills assessment
 - Interview failure analysis
 
-**Verdict:** Jobscan is better for quick resume fixes. SkillHire is better for comprehensive job readiness journey.
+**Verdict:** Jobscan is better for quick resume fixes. Skil Matrix is better for comprehensive job readiness journey.
 
 ---
 
-### 3. SkillHire vs Interview Sidekick
+### 3. Skil Matrix vs Interview Sidekick
 
 **Interview Sidekick Strengths:**
 - Realistic voice conversation with AI
@@ -92,18 +92,18 @@
 - No failure diagnosis details
 - Higher price ($59.99/month)
 
-**SkillHire Advantage:**
+**Skil Matrix Advantage:**
 - Combines interview + resume + skill gaps
 - Interview failure analysis (why you failed, not just scores)
 - Company-specific interview playbooks
 - Resume-to-interview connection (skills identified in resume can be practiced)
 - Curated learning paths for improvements
 
-**Verdict:** Interview Sidekick is best-in-class for interview practice. SkillHire integrates this with career preparation.
+**Verdict:** Interview Sidekick is best-in-class for interview practice. Skil Matrix integrates this with career preparation.
 
 ---
 
-### 4. SkillHire vs iMocha
+### 4. Skil Matrix vs iMocha
 
 **iMocha Strengths:**
 - Massive skill library (3000+ assessments)
@@ -120,18 +120,18 @@
 - No resume + interview combination
 - Not designed for individual students
 
-**SkillHire Advantage:**
+**Skil Matrix Advantage:**
 - Student pricing (free + ₹199/month)
 - Candidate-focused (not recruiter-focused)
 - Combines assessment + learning + job application
 - Simpler, more intuitive interface
 - Resume + interview + skills all connected
 
-**Verdict:** iMocha is for enterprises hiring. SkillHire is for students preparing for jobs.
+**Verdict:** iMocha is for enterprises hiring. Skil Matrix is for students preparing for jobs.
 
 ---
 
-### 5. SkillHire vs StudentAI.app
+### 5. Skil Matrix vs StudentAI.app
 
 **StudentAI.app Strengths:**
 - Free skill gap analysis tool
@@ -148,7 +148,7 @@
 - Fewer integrated features
 - No company-specific prep
 
-**SkillHire Advantage:**
+**Skil Matrix Advantage:**
 - Resume analysis included
 - Interview preparation included
 - Failure diagnosis (unique)
@@ -156,7 +156,7 @@
 - More comprehensive platform
 - Better feature integration
 
-**Verdict:** StudentAI is good for skill analysis. SkillHire is complete job readiness platform.
+**Verdict:** StudentAI is good for skill analysis. Skil Matrix is complete job readiness platform.
 
 ---
 
@@ -180,7 +180,7 @@
 - Average job search = 6-12 months
 - Growing freelance/gig work requiring portfolio
 
-**SkillHire Target:** 5-10% of 8M engineers = 400K-800K students (₹199/month average)
+**Skil Matrix Target:** 5-10% of 8M engineers = 400K-800K students (₹199/month average)
 **Potential Annual Revenue:** ₹950M - ₹1.9B at 5-10% penetration
 
 ---
@@ -189,7 +189,7 @@
 
 ### Current Market Positioning
 
-**SkillHire = "The Complete Job Readiness Platform for Students"**
+**Skil Matrix = "The Complete Job Readiness Platform for Students"**
 
 vs
 
@@ -207,7 +207,7 @@ vs
 "Smart students apply to 50+ jobs and get rejected. They don't know if it's their resume, their interview skills, or missing qualifications. They waste months in the dark."
 
 **Solution:**
-"SkillHire diagnoses exactly what's holding you back:
+"Skil Matrix diagnoses exactly what's holding you back:
 - Resume issues (keywords, formatting, ATS)
 - Interview weaknesses (clarity, structure, confidence)
 - Skill gaps (what companies actually want)
@@ -215,7 +215,7 @@ vs
 - Learning paths (how to fix it in 2-4 weeks)"
 
 **Value:**
-"Get job-ready in 30 days, not 30 months. 87% of SkillHire students get interviews within 3 months."
+"Get job-ready in 30 days, not 30 months. 87% of Skil Matrix students get interviews within 3 months."
 
 **Target:**
 "For 2nd-3rd year engineering/commerce students applying for internships or first jobs."
@@ -232,9 +232,9 @@ vs
 | **iMocha** | ✗ | - | - | Custom $$$ |
 | **Resume Worded** | Good free tier | - | $24.99/mo | - |
 | **StudentAI** | Free tool | - | Custom | - |
-| **SkillHire** | **Good free** | - | **₹199/mo ($2.40/mo)** | **Custom** |
+| **Skil Matrix** | **Good free** | - | **₹199/mo ($2.40/mo)** | **Custom** |
 
-**SkillHire Pricing Advantage:**
+**Skil Matrix Pricing Advantage:**
 - Free tier removes barrier to entry
 - Pricing 10-25x cheaper than competitors (₹199 vs $59.99 = ₹4990)
 - Student-friendly (affordable on college stipend)
@@ -309,7 +309,7 @@ vs
 
 ## 📊 Key Metrics to Track vs Competitors
 
-| Metric | SkillHire Target | Rezi | Jobscan | Interview Sidekick |
+| Metric | Skil Matrix Target | Rezi | Jobscan | Interview Sidekick |
 |--------|------------------|------|---------|-------------------|
 | **Free Tier Signups/Month** | 5000+ | ✗ | 500+ | 1000+ |
 | **Free-to-Paid Conversion** | 8-12% | N/A | 2-3% | 3-5% |
@@ -336,7 +336,7 @@ vs
 ### 3. **Failure-Focused**
 - Only platform analyzing why interviews fail
 - Specific, actionable feedback
-- Unique to SkillHire
+- Unique to Skil Matrix
 
 ### 4. **India-Optimized**
 - Pricing in INR (₹199 vs $59.99)
@@ -398,9 +398,9 @@ vs
 
 ## 🎓 Final Positioning Statement
 
-**SkillHire Premium** is the only complete job readiness platform built specifically for students. While competitors focus on single dimensions (Rezi = resumes, Interview Sidekick = interviews, iMocha = skills), SkillHire combines all three plus a unique failure analysis engine.
+**Skil Matrix Premium** is the only complete job readiness platform built specifically for students. While competitors focus on single dimensions (Rezi = resumes, Interview Sidekick = interviews, iMocha = skills), Skil Matrix combines all three plus a unique failure analysis engine.
 
-For 2nd-3rd year engineering and commerce students applying for internships or first jobs, SkillHire diagnoses and fixes:
+For 2nd-3rd year engineering and commerce students applying for internships or first jobs, Skil Matrix diagnoses and fixes:
 - Resume issues (2-3 week fix)
 - Interview weaknesses (3-4 week fix)
 - Skill gaps (2-4 week fix)

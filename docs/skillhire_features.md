@@ -1,8 +1,8 @@
-# SkillHire Premium – New Feature Recommendations & Enhancement Roadmap
+# Skil Matrix Premium – New Feature Recommendations & Enhancement Roadmap
 
 ## 🎯 Strategic Feature Priorities
 
-Based on competitive analysis of **Rezi, Jobscan, Interview Sidekick, iMocha, and StudentAI.app**, here are recommended features to build SkillHire's competitive moat.
+Based on competitive analysis of **Rezi, Jobscan, Interview Sidekick, iMocha, and StudentAI.app**, here are recommended features to build Skil Matrix's competitive moat.
 
 ---
 
@@ -51,7 +51,7 @@ Based on competitive analysis of **Rezi, Jobscan, Interview Sidekick, iMocha, an
 - Buy/license questions from platforms like LeetCode
 - Partner with companies for question feeds
 
-**Competitive Advantage:** Interview Sidekick has generic questions; SkillHire has company + role specificity
+**Competitive Advantage:** Interview Sidekick has generic questions; Skil Matrix has company + role specificity
 
 ---
 
@@ -69,7 +69,7 @@ Based on competitive analysis of **Rezi, Jobscan, Interview Sidekick, iMocha, an
 - Integrate video analysis to measure body language, tone, pace
 - Create micro-learning library with role-specific coaching
 
-**Competitive Advantage:** Interview Sidekick has some coaching; SkillHire quantifies improvement with video analytics
+**Competitive Advantage:** Interview Sidekick has some coaching; Skil Matrix quantifies improvement with video analytics
 
 ---
 
@@ -89,7 +89,7 @@ Based on competitive analysis of **Rezi, Jobscan, Interview Sidekick, iMocha, an
 - Integration with job application tracking (if students link job applications)
 - Analytics dashboard showing performance comparison
 
-**Competitive Advantage:** Rezi has optimization; SkillHire has version-based experimentation
+**Competitive Advantage:** Rezi has optimization; Skil Matrix has version-based experimentation
 
 ---
 
@@ -156,7 +156,7 @@ Based on competitive analysis of **Rezi, Jobscan, Interview Sidekick, iMocha, an
 - Integrate with job description fetcher (use job board APIs)
 - Templates for different industries
 
-**Competitive Advantage:** Rezi has this; SkillHire combines it with resume + interview prep
+**Competitive Advantage:** Rezi has this; Skil Matrix combines it with resume + interview prep
 
 ---
 
@@ -243,7 +243,7 @@ Based on competitive analysis of **Rezi, Jobscan, Interview Sidekick, iMocha, an
 - Integration with student profile data
 - Conversation history and insights dashboard
 
-**Competitive Advantage:** Personalized at scale; combines all SkillHire data
+**Competitive Advantage:** Personalized at scale; combines all Skil Matrix data
 
 ---
 
@@ -361,9 +361,9 @@ Based on competitive analysis of **Rezi, Jobscan, Interview Sidekick, iMocha, an
 
 ---
 
-## 📊 Feature Comparison: SkillHire vs Competitors
+## 📊 Feature Comparison: Skil Matrix vs Competitors
 
-| Feature | SkillHire | Rezi | Jobscan | Interview Sidekick | iMocha |
+| Feature | Skil Matrix | Rezi | Jobscan | Interview Sidekick | iMocha |
 |---------|-----------|------|---------|-------------------|---------|
 | **Resume Analysis** | ✓ | ✓ | ✓ | ✗ | ✗ |
 | **Interview Practice** | ✓ | ✗ | ✗ | ✓ | ✗ |

@@ -1,4 +1,4 @@
-# SkillHire Premium – HTML/CSS Landing Page Code Examples
+# Skil Matrix Premium – HTML/CSS Landing Page Code Examples
 
 ## 🎨 Modern Landing Page Code Snippets
 
@@ -791,15 +791,15 @@ Below are production-ready code examples for key landing page sections using mod
 <!-- Competitive Comparison Table -->
 <section class="comparison-section">
   <div class="comparison-container">
-    <h2 class="section-headline">How SkillHire Compares</h2>
+    <h2 class="section-headline">How Skil Matrix Compares</h2>
     
     <div class="table-responsive">
       <table class="comparison-table">
         <thead>
           <tr>
             <th>Feature</th>
-            <th class="skillhire-col">
-              <span class="skillhire-badge">SkillHire</span>
+            <th class="Skil Matrix-col">
+              <span class="Skil Matrix-badge">Skil Matrix</span>
             </th>
             <th>Rezi</th>
             <th>Jobscan</th>
@@ -809,49 +809,49 @@ Below are production-ready code examples for key landing page sections using mod
         <tbody>
           <tr class="feature-row">
             <td class="feature-name">Resume Analysis</td>
-            <td class="skillhire-col"><span class="badge-check">✓</span></td>
+            <td class="Skil Matrix-col"><span class="badge-check">✓</span></td>
             <td><span class="badge-check">✓</span></td>
             <td><span class="badge-check">✓</span></td>
             <td><span class="badge-x">✗</span></td>
           </tr>
           <tr class="feature-row">
             <td class="feature-name">Interview Practice</td>
-            <td class="skillhire-col"><span class="badge-check">✓</span></td>
+            <td class="Skil Matrix-col"><span class="badge-check">✓</span></td>
             <td><span class="badge-x">✗</span></td>
             <td><span class="badge-x">✗</span></td>
             <td><span class="badge-check">✓</span></td>
           </tr>
           <tr class="feature-row">
             <td class="feature-name">Skill Gap Analysis</td>
-            <td class="skillhire-col"><span class="badge-check">✓</span></td>
+            <td class="Skil Matrix-col"><span class="badge-check">✓</span></td>
             <td><span class="badge-x">✗</span></td>
             <td><span class="badge-half">⭐</span></td>
             <td><span class="badge-x">✗</span></td>
           </tr>
           <tr class="feature-row">
             <td class="feature-name">Interview Failure Analysis</td>
-            <td class="skillhire-col"><span class="badge-check">✓</span></td>
+            <td class="Skil Matrix-col"><span class="badge-check">✓</span></td>
             <td><span class="badge-x">✗</span></td>
             <td><span class="badge-x">✗</span></td>
             <td><span class="badge-x">✗</span></td>
           </tr>
           <tr class="feature-row">
             <td class="feature-name">Learning Recommendations</td>
-            <td class="skillhire-col"><span class="badge-check">✓</span></td>
+            <td class="Skil Matrix-col"><span class="badge-check">✓</span></td>
             <td><span class="badge-x">✗</span></td>
             <td><span class="badge-x">✗</span></td>
             <td><span class="badge-x">✗</span></td>
           </tr>
           <tr class="feature-row">
             <td class="feature-name">Student Pricing</td>
-            <td class="skillhire-col"><span class="badge-check">✓</span></td>
+            <td class="Skil Matrix-col"><span class="badge-check">✓</span></td>
             <td><span class="badge-x">✗</span></td>
             <td><span class="badge-x">✗</span></td>
             <td><span class="badge-x">✗</span></td>
           </tr>
           <tr class="feature-row highlight-row">
             <td class="feature-name">All-in-One Platform</td>
-            <td class="skillhire-col"><span class="badge-check">✓</span></td>
+            <td class="Skil Matrix-col"><span class="badge-check">✓</span></td>
             <td><span class="badge-x">✗</span></td>
             <td><span class="badge-x">✗</span></td>
             <td><span class="badge-x">✗</span></td>
@@ -862,7 +862,7 @@ Below are production-ready code examples for key landing page sections using mod
     
     <p class="comparison-note">
       <strong>Best for students combining resume, interview, and skill preparation.</strong>
-      SkillHire is the only platform bringing all three dimensions together with failure analysis.
+      Skil Matrix is the only platform bringing all three dimensions together with failure analysis.
     </p>
   </div>
 </section>
@@ -903,7 +903,7 @@ Below are production-ready code examples for key landing page sections using mod
   border-bottom: 2px solid #E5E7EB;
 }
 
-.skillhire-col {
+.Skil Matrix-col {
   background: #F0F9FF;
   border: 2px solid #14B8A6;
 }
@@ -948,7 +948,7 @@ Below are production-ready code examples for key landing page sections using mod
   font-size: 18px;
 }
 
-.skillhire-badge {
+.Skil Matrix-badge {
   background: #14B8A6;
   color: white;
   padding: 8px 16px;
@@ -1087,7 +1087,7 @@ window.addEventListener('scroll', () => {
         <div class="testimonial-stars">★★★★★</div>
         
         <p class="testimonial-quote">
-          "I was applying for 50+ jobs monthly with 0 interviews. SkillHire's resume analysis showed I was missing 15 key keywords. After fixing them, I got 3 interviews in the same week!"
+          "I was applying for 50+ jobs monthly with 0 interviews. Skil Matrix's resume analysis showed I was missing 15 key keywords. After fixing them, I got 3 interviews in the same week!"
         </p>
         
         <div class="testimonial-author">
