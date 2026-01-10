@@ -281,7 +281,7 @@ function setupAuthObserver() {
                 initCharts();
                 window.dispatchEvent(new Event('resize'));
             }, 500);
-        } else if (localStorage.getItem('skillhire_guest') === 'true') {
+        } else if (localStorage.getItem('skilmatrix_guest') === 'true') {
             console.log("Guest mode active, staying on dashboard.");
             user.isLoggedIn = false;
             user.name = "Test User";
@@ -1863,7 +1863,7 @@ function toggleTheme() {
     const newTheme = isLight ? 'dark' : 'light';
 
     document.body.dataset.theme = newTheme;
-    localStorage.setItem('skillhire_theme', newTheme);
+    localStorage.setItem('skilmatrix_theme', newTheme);
     updateThemeIcon();
 
     // Update switch if it exists
@@ -1918,13 +1918,13 @@ function selectCursor(el, type) {
     if (type !== 'default') {
         document.body.classList.add(`cursor-${type}`);
     }
-    localStorage.setItem('skillhire_cursor', type);
+    localStorage.setItem('skilmatrix_cursor', type);
 }
 
 // Initialize Settings & Theme
 document.addEventListener('DOMContentLoaded', () => {
     // Load Cursor
-    const savedCursor = localStorage.getItem('skillhire_cursor');
+    const savedCursor = localStorage.getItem('skilmatrix_cursor');
     if (savedCursor && savedCursor !== 'default') {
         document.body.classList.add(`cursor-${savedCursor}`);
         // Visual indicator update is handled by the buttons' onclick, 
@@ -1948,6 +1948,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Initialize Theme (Immediate)
-const savedTheme = localStorage.getItem('skillhire_theme') || 'dark';
+const savedTheme = localStorage.getItem('skilmatrix_theme') || 'dark';
 document.body.dataset.theme = savedTheme;
 updateThemeIcon();

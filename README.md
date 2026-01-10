@@ -78,11 +78,11 @@ Many students:
 
 | Category | Technology |
 |--------|-----------|
-| Frontend | React.js |
-| Styling | CSS / Tailwind-style UI |
-| Components | Modular React Components |
-| Hosting | GitHub Pages |
-| Build Tool | Vite / React Scripts |
+| Frontend | HTML, CSS, JavaScript (Vanilla) |
+| Styling | CSS3 Variables, Glassmorphism |
+| Components | Modular HTML Structure |
+| Hosting | Firebase / GitHub Pages |
+| Build Tool | None (Static) |
 
 > ⚠️ Note:  
 > This is a **frontend-focused project**. AI logic and backend APIs are represented through UI simulation for demonstration purposes.
@@ -91,7 +91,7 @@ Many students:
 
 ## 📁 Project Structure
 
-skillhire-premium/
+skil-matrix-premium/
 ├── public/
 ├── src/
 │ ├── components/

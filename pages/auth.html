@@ -540,7 +540,7 @@
         }
 
         function handleGuestLogin() {
-            localStorage.setItem('skillhire_guest', 'true');
+            localStorage.setItem('skilmatrix_guest', 'true');
             window.location.href = getRedirectUrl();
         }
 
@@ -563,7 +563,7 @@
             const newTheme = isLight ? 'dark' : 'light';
 
             document.body.dataset.theme = newTheme;
-            localStorage.setItem('skillhire_theme', newTheme);
+            localStorage.setItem('skilmatrix_theme', newTheme);
             updateThemeIcon();
         }
 
@@ -578,7 +578,7 @@
         }
 
         // Initialize Theme
-        const savedTheme = localStorage.getItem('skillhire_theme') || 'dark';
+        const savedTheme = localStorage.getItem('skilmatrix_theme') || 'dark';
         document.body.dataset.theme = savedTheme;
         // Delay slightly to ensure icons are loaded if script runs fast
         setTimeout(updateThemeIcon, 50);
