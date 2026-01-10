@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="../css/dsa.css">
     <link rel="stylesheet" href="../css/roadmap.css">
     <link rel="stylesheet" href="../css/ai_coach.css">
+    <link rel="stylesheet" href="../css/settings.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -109,6 +110,9 @@
                 </button>
                 <button class="nav-item" onclick="switchTab('profile')">
                     <i data-lucide="user-circle"></i> Profile
+                </button>
+                <button class="nav-item" onclick="switchTab('settings')">
+                    <i data-lucide="settings"></i> Settings
                 </button>
                 <button class="nav-item" onclick="switchTab('faq')">
                     <i data-lucide="help-circle"></i> FAQ
@@ -764,6 +768,218 @@
 
                         <div class="timeline-container" id="timeline-render">
                             <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="settings" class="view-section hidden">
+                <div class="settings-layout">
+                    <!-- Settings Sidebar -->
+                    <aside class="settings-sidebar">
+                        <div class="settings-nav-item active" onclick="switchSettingsTab('profile')">
+                            <div class="nav-label">
+                                <i data-lucide="user"></i> Profile
+                            </div>
+                            <i data-lucide="chevron-right" class="arrow"></i>
+                        </div>
+                        <span class="settings-nav-desc">Manage your profile information</span>
+
+                        <div class="settings-nav-item" onclick="switchSettingsTab('language')">
+                            <div class="nav-label">
+                                <i data-lucide="globe"></i> Language
+                            </div>
+                            <i data-lucide="chevron-right" class="arrow"></i>
+                        </div>
+                        <span class="settings-nav-desc">Select your preferred language</span>
+
+                        <div class="settings-nav-item" onclick="switchSettingsTab('cursors')">
+                            <div class="nav-label">
+                                <i data-lucide="mouse-pointer-2"></i> Animated Cursors <span
+                                    class="badge-new">NEW</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="arrow"></i>
+                        </div>
+                        <span class="settings-nav-desc">Customize your cursor</span>
+
+                        <div class="settings-nav-item" onclick="switchSettingsTab('appearance')">
+                            <div class="nav-label">
+                                <i data-lucide="moon"></i> Appearance
+                            </div>
+                            <i data-lucide="chevron-right" class="arrow"></i>
+                        </div>
+                        <span class="settings-nav-desc">Customize the appearance of the application</span>
+
+                        <div class="settings-nav-item" onclick="switchSettingsTab('security')">
+                            <div class="nav-label">
+                                <i data-lucide="lock"></i> Security
+                            </div>
+                            <i data-lucide="chevron-right" class="arrow"></i>
+                        </div>
+                        <span class="settings-nav-desc">Change your password and manage account security</span>
+
+                        <div class="settings-nav-item" onclick="switchSettingsTab('privacy')">
+                            <div class="nav-label">
+                                <i data-lucide="shield"></i> Privacy & Terms
+                            </div>
+                            <i data-lucide="chevron-right" class="arrow"></i>
+                        </div>
+                        <span class="settings-nav-desc">Review our privacy policy and terms of service</span>
+                    </aside>
+
+                    <!-- Settings Content (Profile Default) -->
+                    <!-- Settings Content -->
+                    <div class="settings-content-panel">
+
+                        <!-- 1. Profile View -->
+                        <div id="settings-view-profile" class="settings-view">
+                            <div class="settings-content-header">
+                                <h2>Profile</h2>
+                                <p>Manage your profile information</p>
+                            </div>
+                            <div class="profile-settings-view">
+                                <div class="large-avatar-container">
+                                    <img id="settings-avatar-big"
+                                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User Avatar">
+                                </div>
+                                <button class="change-photo-btn"
+                                    onclick="document.getElementById('avatar-input').click()">Change Photo</button>
+                                <h3 class="user-display-name">User</h3>
+                                <button class="edit-profile-action-btn" onclick="switchTab('profile')">Edit
+                                    Profile</button>
+                            </div>
+                        </div>
+
+                        <!-- 2. Language View -->
+                        <div id="settings-view-language" class="settings-view hidden">
+                            <div class="settings-content-header">
+                                <h2>Language</h2>
+                                <p>Select your preferred language for the interface.</p>
+                            </div>
+                            <div class="form-group full">
+                                <label>System Language</label>
+                                <select id="settings-lang-select" onchange="alert('Language changed (Simulation)')">
+                                    <option value="en">English (United States)</option>
+                                    <option value="es">Español</option>
+                                    <option value="fr">Français</option>
+                                    <option value="de">Deutsch</option>
+                                    <option value="hi">Hindi</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 3. Cursors View -->
+                        <div id="settings-view-cursors" class="settings-view hidden">
+                            <div class="settings-content-header">
+                                <h2>Animated Cursors</h2>
+                                <p>Choose a custom cursor style to match your vibe.</p>
+                            </div>
+                            <div class="cursor-grid">
+                                <div class="cursor-option active" onclick="selectCursor(this, 'default')">
+                                    <div class="cursor-preview"
+                                        style="background-image: url('https://img.icons8.com/ios-filled/50/ffffff/cursor.png');">
+                                    </div>
+                                    <span>Default</span>
+                                </div>
+                                <div class="cursor-option" onclick="selectCursor(this, 'cyan')">
+                                    <div class="cursor-preview"
+                                        style="background-image: url('https://img.icons8.com/color/48/cyan-cursor.png'); background-color: #00f2fe; border-radius: 50%;">
+                                    </div>
+                                    <span>Neon Cyan</span>
+                                </div>
+                                <div class="cursor-option" onclick="selectCursor(this, 'purple')">
+                                    <div class="cursor-preview"
+                                        style="background-image: url('https://img.icons8.com/color/48/purple-cursor.png'); background-color: #bc7af9; border-radius: 50%;">
+                                    </div>
+                                    <span>Royal Purple</span>
+                                </div>
+                                <div class="cursor-option" onclick="selectCursor(this, 'gold')">
+                                    <div class="cursor-preview"
+                                        style="background-image: url('https://img.icons8.com/color/48/gold-cursor.png'); background-color: #ffd700; border-radius: 50%;">
+                                    </div>
+                                    <span>Midas Gold</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. Appearance View -->
+                        <div id="settings-view-appearance" class="settings-view hidden">
+                            <div class="settings-content-header">
+                                <h2>Appearance</h2>
+                                <p>Customize the look and feel of SkillHire.</p>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <h4>Dark Mode</h4>
+                                    <p class="text-muted-sm">Reduce eye strain with a dark interface.</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="settings-theme-toggle" checked onchange="toggleTheme()">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <h4>Reduced Motion</h4>
+                                    <p class="text-muted-sm">Minimize animations for better accessibility.</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 5. Security View -->
+                        <div id="settings-view-security" class="settings-view hidden">
+                            <div class="settings-content-header">
+                                <h2>Security</h2>
+                                <p>Manage your account security settings.</p>
+                            </div>
+                            <div class="security-form">
+                                <div class="form-group full">
+                                    <label>Current Password</label>
+                                    <input type="password" placeholder="••••••••">
+                                </div>
+                                <div class="form-group full">
+                                    <label>New Password</label>
+                                    <input type="password" placeholder="Enter new password">
+                                </div>
+                                <div class="form-group full">
+                                    <label>Confirm New Password</label>
+                                    <input type="password" placeholder="Confirm new password">
+                                </div>
+                                <button class="btn-primary full-width"
+                                    onclick="alert('Password Update Simulated')">Update Password</button>
+                            </div>
+                        </div>
+
+                        <!-- 6. Privacy View -->
+                        <div id="settings-view-privacy" class="settings-view hidden">
+                            <div class="settings-content-header">
+                                <h2>Privacy & Terms</h2>
+                                <p>Review how we handle your data.</p>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <h4>Public Profile</h4>
+                                    <p class="text-muted-sm">Allow recruiters to find your profile.</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="toggle-row">
+                                <div>
+                                    <h4>Share Data with AI Coach</h4>
+                                    <p class="text-muted-sm">Allow AI to analyze your performance for tips.</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>

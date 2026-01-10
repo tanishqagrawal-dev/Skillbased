@@ -315,7 +315,7 @@ async function syncUserWithFirestore() {
 }
 
 function updateUI() {
-    const ids = ['header-username', 'profile-name-display', 'input-name', 'input-email', 'header-avatar', 'profile-img-preview'];
+    const ids = ['header-username', 'profile-name-display', 'input-name', 'input-email', 'header-avatar', 'profile-img-preview', 'settings-avatar-big'];
 
     const elements = ids.map(id => document.getElementById(id));
 
@@ -325,6 +325,7 @@ function updateUI() {
     if (elements[3]) elements[3].value = user.email;
     if (elements[4]) elements[4].src = user.photo;
     if (elements[5]) elements[5].src = user.photo;
+    if (elements[6]) elements[6].src = user.photo;
 }
 
 // --- NAVIGATION ---
@@ -353,7 +354,8 @@ function switchTab(tabId) {
         'resume-builder': 'Resume Builder',
         'interview-prep': 'Mock Interview',
         'dsa-practice': 'DSA Practice',
-        'roadmap': 'Career Roadmap'
+        'roadmap': 'Career Roadmap',
+        'settings': 'Settings'
     };
     const titleEl = document.getElementById('page-title');
     if (titleEl) titleEl.innerText = titles[tabId] || 'Dashboard';
@@ -764,6 +766,10 @@ function toggleTheme() {
     document.body.dataset.theme = newTheme;
     localStorage.setItem('skillhire_theme', newTheme);
     updateThemeIcon();
+
+    // Update switch if it exists
+    const themeToggle = document.getElementById('settings-theme-toggle');
+    if (themeToggle) themeToggle.checked = newTheme === 'dark';
 }
 
 function updateThemeIcon() {
@@ -776,7 +782,73 @@ function updateThemeIcon() {
     }
 }
 
-// Initialize Theme
+// --- SETTINGS NAVIGATION ---
+function switchSettingsTab(settingId) {
+    // 1. Sidebar Active State
+    if (event) {
+        const navItems = document.querySelectorAll('.settings-nav-item');
+        navItems.forEach(item => item.classList.remove('active'));
+        // Handle click on icon or text
+        const clickedItem = event.target.closest('.settings-nav-item');
+        if (clickedItem) clickedItem.classList.add('active');
+    }
+
+    // 2. Switch Content Views
+    const views = document.querySelectorAll('.settings-view');
+    views.forEach(v => v.classList.add('hidden'));
+
+    // Safety check if settingId is just 'settings' (from main nav) -> default to 'profile'
+    if (settingId === 'settings') settingId = 'profile';
+
+    const target = document.getElementById(`settings-view-${settingId}`);
+    if (target) {
+        target.classList.remove('hidden');
+    } else {
+        // Fallback
+        const profile = document.getElementById('settings-view-profile');
+        if (profile) profile.classList.remove('hidden');
+    }
+}
+
+// --- SETTINGS FEATURES ---
+function selectCursor(el, type) {
+    document.querySelectorAll('.cursor-option').forEach(opt => opt.classList.remove('active'));
+    if (el) el.classList.add('active');
+
+    document.body.classList.remove('cursor-cyan', 'cursor-purple', 'cursor-gold');
+    if (type !== 'default') {
+        document.body.classList.add(`cursor-${type}`);
+    }
+    localStorage.setItem('skillhire_cursor', type);
+}
+
+// Initialize Settings & Theme
+document.addEventListener('DOMContentLoaded', () => {
+    // Load Cursor
+    const savedCursor = localStorage.getItem('skillhire_cursor');
+    if (savedCursor && savedCursor !== 'default') {
+        document.body.classList.add(`cursor-${savedCursor}`);
+        // Visual indicator update is handled by the buttons' onclick, 
+        // but for initial load we might want to highlight the right box.
+        // Doing this simply:
+        /*
+        const opts = document.querySelectorAll('.cursor-option span');
+        opts.forEach(o => { 
+           if(o.innerText.toLowerCase().includes(savedCursor)) o.parentElement.classList.add('active');
+        });
+        */
+    }
+
+    // Sync Theme Toggle
+    setTimeout(() => {
+        const themeToggle = document.getElementById('settings-theme-toggle');
+        if (themeToggle) {
+            themeToggle.checked = document.body.dataset.theme === 'dark';
+        }
+    }, 500);
+});
+
+// Initialize Theme (Immediate)
 const savedTheme = localStorage.getItem('skillhire_theme') || 'dark';
 document.body.dataset.theme = savedTheme;
 updateThemeIcon();
