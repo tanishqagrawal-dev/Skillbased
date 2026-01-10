@@ -100,5 +100,4 @@ skillhire-premium-1/
 This project is for educational and portfolio purposes, demonstrating advanced frontend engineering techniques.
 
 ---
-**Designed & Developed by Tanishq Agrawal (Antigravity)**
-*Part of the Deepmind Advanced Agentic Coding Initiative*
+**Designed & Developed by *Part of the Deepmind Advanced Agentic Coding Initiative*
