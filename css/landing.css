@@ -1056,8 +1056,8 @@ body[data-theme="light"] {
 
 /* --- Mobile Navigation (Visible Always for "Toolbar" access) --- */
 .mobile-menu-btn {
-    display: flex;
-    /* Always visible as per user request */
+    display: none;
+    /* Hidden on desktop by default */
     background: rgba(255, 255, 255, 0.05);
     /* Subtle dark glass background */
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1303,6 +1303,10 @@ body[data-theme="light"] {
     .navbar {
         padding: 16px 5%;
     }
+
+    .mobile-menu-btn {
+        display: flex;
+    }
 }
 
 @media (max-width: 600px) {
@@ -1326,6 +1330,18 @@ body[data-theme="light"] {
 
     .feature-visual img {
         margin-top: 20px;
+    }
+
+    .problems-grid,
+    .pricing-grid,
+    .founders-grid {
+        grid-template-columns: 1fr;
+    }
+
+    th,
+    td {
+        padding: 10px 5px;
+        font-size: 0.9rem;
     }
 }
 
