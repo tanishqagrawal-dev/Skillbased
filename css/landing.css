@@ -2909,7 +2909,11 @@ body[data-theme="light"] {
    FINAL MOBILE OVERRIDES
    Forcefully fix spacing issues on small screens
    ========================================= */
-@media (max-width: 1300px) {
+/* =========================================
+   FINAL MOBILE OVERRIDES
+   Forcefully fix spacing and Density
+   ========================================= */
+@media (max-width: 1024px) {
 
     /* Reset Height constraints to prevent blank spaces */
     html,
@@ -2950,12 +2954,6 @@ body[data-theme="light"] {
         line-height: 1.2 !important;
     }
 
-    /* Make the text pop more on mobile */
-    .hero-headline br {
-        display: none;
-        /* Let text wrap naturally */
-    }
-
     .hero-subheadline {
         font-size: 1rem !important;
         padding: 0 10px;
@@ -2985,21 +2983,71 @@ body[data-theme="light"] {
         height: auto;
         margin: 0 auto;
         display: block;
-        /* Add a mobile-specific glow/shadow */
         box-shadow: 0 10px 30px rgba(0, 242, 254, 0.2) !important;
     }
 
     /* Reduce Section Padding generally */
     section {
-        padding: 50px 20px !important;
+        padding: 50px 15px !important;
     }
 
     .section-title {
-        font-size: 2rem !important;
+        font-size: 1.8rem !important;
         margin-bottom: 30px !important;
     }
 
-    /* Ensure Nav collapses if it was stuck open */
+    /* --- High Density Mobile Grids (Laptop-like feel) --- */
+
+    /* 2 Columns for Problems to mimic grid look */
+    .problems-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px !important;
+    }
+
+    .card {
+        padding: 20px 15px !important;
+        /* Smaller padding */
+    }
+
+    .card h3 {
+        font-size: 1.1rem !important;
+    }
+
+    .card p {
+        font-size: 0.85rem !important;
+        line-height: 1.4 !important;
+    }
+
+    /* 2 Columns for Founders */
+    .founders-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px !important;
+    }
+
+    .founder-front {
+        padding: 15px !important;
+    }
+
+    .founder-img-wrapper {
+        width: 100px !important;
+        height: 100px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .founder-img-wrapper img {
+        width: 90px !important;
+        height: 90px !important;
+    }
+
+    .founder-front h3 {
+        font-size: 1.1rem !important;
+    }
+
+    .founder-front .role {
+        font-size: 0.75rem !important;
+    }
+
+    /* Ensure Nav collapses */
     .nav-menu,
     .nav-right {
         display: none !important;
@@ -3012,5 +3060,14 @@ body[data-theme="light"] {
 
     .logo {
         flex-grow: 1;
+    }
+}
+
+/* Very Small Screens - Fallback to 1 column if too tight */
+@media (max-width: 380px) {
+
+    .problems-grid,
+    .founders-grid {
+        grid-template-columns: 1fr !important;
     }
 }
