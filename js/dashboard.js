@@ -167,7 +167,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const profileImgPreview = document.getElementById('profile-image-preview');
         if (profileImgPreview) profileImgPreview.src = user.photo;
     }
-    window.updateUI = updateUI;
+    // Expose initCharts globally so it can be called from anywhere
+    window.initCharts = initCharts;
+
+    // Force Chart Initialization on Load
+    setTimeout(() => {
+        console.log("Forcing chart initialization...");
+        if (typeof initCharts === 'function') {
+            initCharts();
+        }
+    }, 1000);
 });
 
 // Guest Login (Simulated) - GLOBAL FUNCTION
@@ -408,6 +417,13 @@ function switchTab(tabId) {
     } else if (typeof closeMobileMenu === 'function') {
         closeMobileMenu();
     }
+
+    // Re-initialize charts if switching to dashboard
+    if (tabId === 'dashboard') {
+        setTimeout(() => {
+            if (typeof initCharts === 'function') initCharts();
+        }, 100);
+    }
 }
 
 // --- ANALYZER LOGIC ---
@@ -533,54 +549,97 @@ function initCharts() {
     if (ctxLine) {
         if (performanceChartV2) performanceChartV2.destroy();
 
-        // Gradient
+        // Gradient for Main Data
         const gradient = ctxLine.getContext('2d').createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'rgba(0, 242, 254, 0.5)'); // Cyan
+        gradient.addColorStop(0, 'rgba(0, 242, 254, 0.4)'); // Cyan
         gradient.addColorStop(1, 'rgba(0, 242, 254, 0.0)');
+
+        // Comparison Gradient
+        const gradient2 = ctxLine.getContext('2d').createLinearGradient(0, 0, 0, 400);
+        gradient2.addColorStop(0, 'rgba(168, 85, 247, 0.2)'); // Purple
+        gradient2.addColorStop(1, 'rgba(168, 85, 247, 0.0)');
 
         performanceChartV2 = new Chart(ctxLine, {
             type: 'line',
             data: {
                 labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
-                datasets: [{
-                    label: 'Overall Progress',
-                    data: [45, 52, 49, 68, 75, 88],
-                    borderColor: '#00f2fe',
-                    backgroundColor: gradient,
-                    borderWidth: 3,
-                    pointBackgroundColor: '#fff',
-                    pointBorderColor: '#00f2fe',
-                    pointRadius: 6,
-                    pointHoverRadius: 8,
-                    fill: true,
-                    tension: 0.4 // Smooth curve
-                }]
+                datasets: [
+                    {
+                        label: 'Your Trajectory',
+                        data: [45, 52, 49, 68, 75, 88],
+                        borderColor: '#00f2fe',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#0f172a',
+                        pointBorderColor: '#00f2fe',
+                        pointBorderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 9,
+                        pointHoverBackgroundColor: '#fff',
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Market Average',
+                        data: [40, 42, 45, 48, 55, 60],
+                        borderColor: '#a855f7',
+                        borderDash: [5, 5],
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        fill: false,
+                        tension: 0.4,
+                        opacity: 0.6
+                    }
+                ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                animation: {
+                    x: {
+                        type: 'number',
+                        easing: 'easeOutQuart',
+                        duration: 1000,
+                        delay: 200
+                    },
+                    y: {
+                        type: 'number',
+                        easing: 'easeOutQuart',
+                        duration: 1000,
+                    }
+                },
                 plugins: {
-                    legend: { display: false },
+                    legend: {
+                        display: true,
+                        labels: { color: '#94a3b8', font: { size: 11 } }
+                    },
                     tooltip: {
                         mode: 'index',
                         intersect: false,
-                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        backgroundColor: 'rgba(15, 23, 42, 0.95)',
                         titleColor: '#fff',
                         bodyColor: '#cbd5e1',
                         borderColor: 'rgba(255,255,255,0.1)',
-                        borderWidth: 1
+                        borderWidth: 1,
+                        padding: 10,
+                        displayColors: true,
+                        callbacks: {
+                            label: function (context) {
+                                return context.dataset.label + ': ' + context.parsed.y + '%';
+                            }
+                        }
                     }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
                         max: 100,
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                        ticks: { color: '#94a3b8' }
+                        grid: { color: 'rgba(255, 255, 255, 0.03)' },
+                        ticks: { color: '#64748b', font: { size: 10 } }
                     },
                     x: {
                         grid: { display: false },
-                        ticks: { color: '#94a3b8' }
+                        ticks: { color: '#64748b', font: { size: 10 } }
                     }
                 },
                 interaction: {
@@ -600,44 +659,53 @@ function initCharts() {
         skillRadarChartV2 = new Chart(ctxRadar, {
             type: 'radar',
             data: {
-                labels: ['Coding', 'Design', 'Communication', 'System Design', 'Cloud'],
+                labels: ['Coding', 'Design', 'Communication', 'System Design', 'Cloud', 'AI/ML'],
                 datasets: [{
                     label: 'Current Skills',
-                    data: [85, 60, 70, 50, 40],
-                    backgroundColor: 'rgba(168, 85, 247, 0.2)', // Purple
-                    borderColor: '#a855f7',
-                    pointBackgroundColor: '#a855f7',
+                    data: [85, 60, 70, 50, 40, 65],
+                    backgroundColor: 'rgba(0, 242, 254, 0.2)', // Cyan wash
+                    borderColor: '#00f2fe',
+                    pointBackgroundColor: '#00f2fe',
                     borderWidth: 2,
-                    pointRadius: 4
+                    pointRadius: 3
                 }, {
-                    label: 'Target Role (SDE-2)',
-                    data: [90, 75, 80, 85, 80],
+                    label: 'Role Target (SDE-2)',
+                    data: [90, 75, 80, 85, 80, 70],
                     backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                    borderColor: 'rgba(255, 255, 255, 0.4)',
                     borderWidth: 1,
-                    pointRadius: 0,
-                    borderDash: [5, 5]
+                    borderDash: [5, 5],
+                    pointRadius: 0
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: { color: '#94a3b8', font: { size: 11 } }
-                    }
+                animation: {
+                    duration: 2000,
+                    easing: 'easeOutElastic'
                 },
                 scales: {
                     r: {
                         angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
                         grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                        pointLabels: { color: '#cbd5e1', font: { size: 12 } },
-                        ticks: { backdropColor: 'transparent', display: false }
+                        pointLabels: {
+                            color: '#94a3b8',
+                            font: { size: 11, weight: '600' }
+                        },
+                        ticks: { display: false, backdropColor: 'transparent' }
                     }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: { color: '#94a3b8', font: { size: 11 } }
+                    },
                 }
             }
         });
+
     }
 }
 
