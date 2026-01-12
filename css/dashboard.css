@@ -2432,3 +2432,122 @@ th {
     background: rgba(239, 68, 68, 0.1);
     color: var(--danger);
 }
+
+/* --- MOBILE DASHBOARD STYLES --- */
+@media (max-width: 768px) {
+    .app-container {
+        display: block;
+        /* Stack sidebar and main content */
+        position: relative;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        width: 280px;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: none;
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+        box-shadow: 10px 0 50px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Overlay for sidebar */
+    #sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s;
+    }
+
+    #sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .main-content {
+        padding: 1.5rem 1rem;
+        margin-left: 0 !important;
+        /* Override desktop margins */
+        width: 100%;
+    }
+
+    /* Header adjustments */
+    .top-bar {
+        padding: 0.75rem 1rem;
+        gap: 10px;
+    }
+
+    .top-bar-left {
+        gap: 10px;
+    }
+
+    /* Show toggle button */
+    #menu-toggle {
+        display: flex !important;
+        margin-right: 0;
+    }
+
+    /* Grids to single column */
+    .stats-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .charts-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chart-box {
+        min-height: 300px;
+        padding: 1rem;
+    }
+
+    .profile-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .feedback-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stack-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Adjust tables */
+    .table-card {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 600px;
+        /* Ensure scroll */
+    }
+
+    /* Adjust font sizes */
+    .section-title-sm {
+        font-size: 1.5rem;
+    }
+
+    .stat-card {
+        padding: 1.25rem;
+    }
+}

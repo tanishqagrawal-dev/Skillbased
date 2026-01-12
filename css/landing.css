@@ -1258,27 +1258,31 @@ body[data-theme="light"] {
     stroke-width: 2px;
 }
 
-/* Light Theme Adjustments */
-[data-theme="light"] .dropdown-content {
-    background: #ffffff;
-    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+/* Intermediate Breakpoint for Tablet/Small Laptop to keep Navbar visible */
+@media (max-width: 1200px) {
+    .nav-container {
+        gap: 20px;
+    }
+
+    .nav-left {
+        gap: 20px;
+    }
+
+    .nav-link {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
 }
 
-[data-theme="light"] .nav-link:hover,
-[data-theme="light"] .dropdown-trigger:hover,
-[data-theme="light"] .dropdown-item:hover {
-    background: rgba(0, 0, 0, 0.05);
-}
-
-/* Hide menu on mobile */
-@media (max-width: 1024px) {
+/* Hide menu on mobile / small tablets */
+@media (max-width: 900px) {
     .nav-menu {
         display: none;
     }
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
 
     .hero-container,
     .feature-item,
