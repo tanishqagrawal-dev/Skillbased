@@ -86,101 +86,84 @@ body {
 /* Hero Section */
 /* Hero Section */
 .hero {
-    min-height: 100vh;
+    min-height: 700px;
+    /* Avoid huge gaps on tall virtual viewports */
     display: flex;
     align-items: center;
-    padding: 120px 5% 60px;
-    background:
-        radial-gradient(circle at 10% 20%, rgba(20, 184, 166, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
-        linear-gradient(180deg, rgba(6, 17, 33, 0) 0%, #061121 100%);
-    position: relative;
+    padding: 120px 5% 80px;
+    background: linear-gradient(135deg, rgba(15, 58, 125, 0.2) 0%, transparent 100%);
 }
 
 .hero-container {
-    max-width: 1280px;
-    /* Slightly wider for modern feel */
+    max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 80px;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
     align-items: center;
 }
 
 .hero-headline {
-    font-size: 4.5rem;
-    /* Larger and impactful */
+    font-size: 4rem;
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 24px;
-    letter-spacing: -0.03em;
-    background: linear-gradient(180deg, #FFFFFF 0%, #94A3B8 100%);
+    background: linear-gradient(to right, #fff, #9CA3AF);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.1));
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, #2DD4BF 0%, #A78BFA 50%, #F472B6 100%);
-    /* More vibrant tricolor gradient */
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-weight: 800;
 }
 
 .hero-subheadline {
     font-size: 1.25rem;
-    color: #CBD5E1;
-    /* Lighter for better contrast */
+    color: var(--text-muted);
     margin-bottom: 40px;
     max-width: 600px;
-    line-height: 1.7;
-    font-weight: 400;
-    opacity: 0.9;
 }
 
 .btn {
-    padding: 16px 36px;
-    border-radius: 100px;
-    /* Pill shape for modern tech look */
-    font-weight: 600;
+    padding: 16px 32px;
+    border-radius: 12px;
+    font-weight: 700;
     font-size: 1rem;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: inline-flex;
     align-items: center;
     gap: 12px;
     border: none;
     text-decoration: none;
-    position: relative;
-    overflow: hidden;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary) 0%, #0D9488 100%);
+    background: var(--primary);
     color: #fff;
-    box-shadow: 0 10px 30px -10px var(--primary-glow), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 20px var(--primary-glow);
 }
 
 .btn-primary:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px -10px var(--primary-glow);
-    filter: brightness(1.1);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 0 30px var(--primary-glow);
 }
 
 .btn-outline {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #fff;
-    backdrop-filter: blur(10px);
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 10px 24px;
 }
 
 .btn-outline:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: #fff;
-    transform: translateY(-4px);
+    background: var(--primary);
+    color: #fff;
+    transform: translateY(-2px);
 }
 
 .hero-visual img {
@@ -1751,7 +1734,7 @@ body[data-theme="light"] {
     }
 }
 
-/* --- Founders Full Profile Modal --- */
+/* --- High-Tech Founder Modal Redesign --- */
 .founder-modal {
     position: fixed;
     inset: 0;
@@ -1759,11 +1742,11 @@ body[data-theme="light"] {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(6, 17, 33, 0.85);
-    backdrop-filter: blur(15px);
+    background: rgba(3, 7, 18, 0.9);
+    backdrop-filter: blur(20px);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .founder-modal.active {
@@ -1772,19 +1755,25 @@ body[data-theme="light"] {
 }
 
 .founder-content {
-    width: 90%;
-    max-width: 800px;
-    background: rgba(15, 23, 42, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    border-radius: 24px;
+    width: 95%;
+    max-width: 650px;
+    background: rgba(10, 20, 40, 0.6);
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(20, 184, 166, 0.05);
+    border-radius: 30px;
     overflow: hidden;
-    transform: scale(0.95) translateY(20px);
+    transform: scale(0.9) translateY(30px);
     opacity: 0;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
     position: relative;
-    max-height: 90vh;
+    max-height: 85vh;
     overflow-y: auto;
+    /* Hide scrollbar */
+    scrollbar-width: none;
+}
+
+.founder-content::-webkit-scrollbar {
+    display: none;
 }
 
 .founder-content.active {
@@ -1792,66 +1781,247 @@ body[data-theme="light"] {
     opacity: 1;
 }
 
-/* Modal Banner */
-/* Modal Banner */
+/* Modal Banner with Tech Grid */
 .modal-banner {
-    height: 180px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(15, 23, 42, 1)),
-        url('https://images.unsplash.com/photo-1519638399535-1b036603ac77?auto=format&fit=crop&q=80&w=1000');
+    height: 160px;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, #0a1428 100%),
+        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
     background-size: cover;
     background-position: center;
     position: relative;
-    overflow: hidden;
 }
 
-/* 3D Wireframe Grid Background Effect */
-.modal-banner::before {
+.modal-banner::after {
     content: '';
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(transparent 0%, rgba(20, 184, 166, 0.1) 2%, transparent 3%),
-        linear-gradient(90deg, transparent 0%, rgba(124, 58, 237, 0.1) 2%, transparent 3%);
+    background-image:
+        linear-gradient(rgba(45, 212, 191, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(45, 212, 191, 0.1) 1px, transparent 1px);
     background-size: 40px 40px;
-    transform: perspective(500px) rotateX(60deg) translateY(-50%) scale(2);
-    animation: grid-move 20s linear infinite;
-    opacity: 0.4;
-    pointer-events: none;
+    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
 }
 
-@keyframes grid-move {
-    0% {
-        background-position: 0 0;
-    }
-
-    100% {
-        background-position: 0 100%;
-    }
-}
-
-/* Modal Content Background Animation */
-.founder-content::after {
-    content: '';
+/* Close Button */
+.close-modal {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.close-modal:hover {
+    background: var(--danger);
+    border-color: var(--danger);
+    transform: rotate(90deg);
+}
+
+/* Profile Section */
+.modal-profile-header {
+    position: relative;
+    padding: 0 40px;
+    margin-top: -60px;
+    /* Less pull up */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+/* Tech Ring Avatar */
+.modal-profile-img {
+    width: 120px;
+    /* Smaller avatar */
+    height: 120px;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+    padding: 4px;
+    background: #0a1428;
+    border: 2px solid rgba(45, 212, 191, 0.3);
+    box-shadow: 0 0 30px rgba(45, 212, 191, 0.2);
+}
+
+.modal-profile-img img {
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 50% 50%, rgba(20, 184, 166, 0.03), transparent 60%);
-    z-index: -1;
-    pointer-events: none;
-    animation: pulse-bg 6s ease-in-out infinite alternate;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #0f172a;
 }
 
-@keyframes pulse-bg {
-    0% {
-        transform: scale(0.8);
-        opacity: 0.5;
+/* Animated Neon Ring */
+.modal-profile-img::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: var(--primary);
+    border-right-color: var(--secondary);
+    animation: simple-spin 3s linear infinite;
+}
+
+.modal-socials {
+    display: flex;
+    gap: 12px;
+    padding-bottom: 5px;
+}
+
+.modal-social-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.modal-social-link:hover {
+    background: var(--primary);
+    color: #000;
+    box-shadow: 0 0 20px var(--primary-glow);
+    transform: translateY(-3px);
+}
+
+/* Modal Info Text */
+.modal-info {
+    padding: 0 40px 40px;
+}
+
+.modal-info h2 {
+    font-size: 2rem;
+    /* reduced from 2.5rem */
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.modal-info .role {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(45, 212, 191, 0.1);
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    border-radius: 100px;
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+/* Section Styling */
+.modal-section-title {
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-section-title i {
+    color: var(--secondary);
+}
+
+.modal-bio {
+    color: #94a3b8;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+}
+
+/* Tech Badges for Skills */
+.modal-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    /* Center align skills systematically */
+}
+
+.skill-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 100px;
+    /* Fully rounded for cleaner pill look */
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s;
+    cursor: default;
+    white-space: nowrap;
+    /* Prevent tag from breaking into multiple lines */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.skill-tag:hover {
+    border-color: var(--secondary);
+    background: rgba(124, 58, 237, 0.1);
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+    transform: translateY(-2px);
+    color: #fff;
+}
+
+@keyframes simple-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mobile Adjustments for Modal */
+@media (max-width: 600px) {
+    .modal-profile-header {
+        flex-direction: column;
+        align-items: center;
+        margin-top: -60px;
+        gap: 20px;
+        padding: 0 20px;
     }
 
-    100% {
-        transform: scale(1.2);
-        opacity: 1;
+    .modal-info {
+        padding: 0 25px 30px;
+        text-align: center;
+    }
+
+    .modal-info h2 {
+        font-size: 2rem;
+    }
+
+    .modal-socials {
+        justify-content: center;
+    }
+
+    .modal-section-title {
+        justify-content: center;
+    }
+
+    .modal-skills {
+        justify-content: center;
     }
 }
 
